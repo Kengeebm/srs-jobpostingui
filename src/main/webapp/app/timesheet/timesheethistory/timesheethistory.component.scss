@@ -1,0 +1,68 @@
+.card {
+  margin: 0px 50px 0px 50px;
+}
+
+.btn {
+  margin-top: 2rem !important;
+}
+
+.bck-btn {
+  margin-left: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    margin: 0px 0px 0px 0px;
+  }
+}
+
+.detail {
+  width: 100%;
+}
+
+.modal-body {
+  height: 500px !important;
+}
+@media screen and (max-width: 425px) {
+  table {
+    overflow: scroll;
+    position: relative;
+    display: grid;
+    margin-bottom: 30px;
+  }
+}
+.cal {
+  margin-right: 0px;
+}
+
+.present {
+  background-color: #90f587;
+}
+
+.wfh {
+  background-color: #d2facf;
+}
+
+.wcl {
+  background-color: #d2facf;
+}
+
+.co {
+  background-color: #ffcfb3;
+}
+
+.holiday {
+  background-color: #ffc09c;
+}
+
+.close > span:not(.sr-only) {
+  font-size: 3.25rem;
+}
+
+@media screen and (max-width: 425px) {
+  .modal-body {
+    height: 600px !important;
+    background: white;
+  }
+}

@@ -1,0 +1,33 @@
+{
+    "obj": [
+        {
+            "innerSize": "50%",
+            "startAngle": 0,
+            "data": [
+                {
+                    "name": "Java",
+                    "y": 40
+                },
+                {
+                    "name": "Testing",
+                    "y": 90
+                },
+                {
+                    "name": "UI",
+                    "y": 50
+                },
+                {
+                    "name": "Fullstock",
+                    "y": 20
+                },
+                {
+                    "name": "Devops",
+                    "y": 60
+                }
+            ],
+            "title": "technology",
+            "graph": "pie",
+            "marginLeft": 0
+        }
+    ]
+}

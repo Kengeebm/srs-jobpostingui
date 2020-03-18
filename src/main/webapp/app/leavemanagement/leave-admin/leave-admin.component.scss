@@ -1,0 +1,22 @@
+.mat-tab-group {
+  margin-bottom: 2px;
+}
+.card {
+  position: sticky;
+}
+table {
+  width: 100%;
+}
+.subBtn {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+}
+
+@media screen and (max-width: 425px) {
+  table {
+    overflow: scroll;
+    position: relative;
+    display: grid;
+  }
+}

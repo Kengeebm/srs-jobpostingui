@@ -1,0 +1,64 @@
+<div class="container-fluid mt--13">
+    <button class="btn btn-primary backBtn topBtn" (click)="onBackButtonEvent()" [disabled]='disableBack'>
+        Back
+    </button>
+    <div class="card">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <table mat-table [dataSource]="timeSheetApprovedDataSource" class="mat-elevation-z8" #sort="matSort" matSort>
+
+            <ng-container matColumnDef="employeeId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="userName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="submitDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submited Date</th>
+                <td mat-cell *matCellDef="let element"> {{element.submitDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="approveStatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                <td mat-cell *matCellDef="let element"> {{element.approveStatus}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(mytemplate, row)">
+                <ng-template #mytemplate let-modal class="modal-box">
+                    <div class="modal-content card">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Timesheet History Details</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body d-flex justify-content-center text-center jh-entity-details row cal"
+                            style="position:relative;margin: 0 auto;display:inline-block;">
+                            <div class="col-sm-1.0 border border-primary dates justify-content-center"
+                                *ngFor="let timesheetdatestatus of row.timeSheetDateStatusList; let i = index"
+                                [ngClass]="[timesheetdatestatus.status == present? 'present' : timesheetdatestatus.status == wfh? 'wfh' : timesheetdatestatus.status == wcl? 'wcl': timesheetdatestatus.status == co? 'co': 'holiday']">
+                                <div class="detail mb-1 text-center" style="color: black"
+                                    [ngClass]="[timesheetdatestatus.status == present? 'present' : timesheetdatestatus.status == wfh? 'wfh': timesheetdatestatus.status == wcl? 'wcl': timesheetdatestatus.status == co? 'co':'holiday']">
+                                    <span><small><strong>{{timesheetdatestatus.date | date:'EEE, MMM'}}</strong></small></span>
+                                    <span class="my-0">
+                                        <h1 class="my-0"><strong>{{timesheetdatestatus.date | date:'dd'}}</strong></h1>
+                                    </span>
+                                    <span>{{timesheetdatestatus.status}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </tr>
+        </table>
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+        <mat-paginator [pageSizeOptions]="[10, 30, 50, numRows]" showFirstLastButtons #paginator></mat-paginator>
+    </div>
+</div>

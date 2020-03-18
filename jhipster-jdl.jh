@@ -1,0 +1,28 @@
+
+entity Job{
+	 jobId String,
+     clientName String required,
+     noOfPosition Integer,
+     positionName String required,
+     location String required,
+     jobDesc String maxlength(1000) required,
+     expReq String,
+     filledPosition Integer,
+     comments String,
+     startDate LocalDate,
+     endDate LocalDate,
+     closedOn LocalDate,
+     openedBy String,
+     closedBy String,
+}
+// Set pagination options
+paginate Job with pagination
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

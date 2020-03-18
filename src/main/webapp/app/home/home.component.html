@@ -1,0 +1,68 @@
+<!-- 
+</login> -->
+<!-- Page content -->
+<div class="container mt--8 pb-5">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-5 col-md-7">
+            <!-- <div class="card bg-secondary shadow border-0">-->
+            <!-- <div class="card-body px-lg-5 py-lg-5">-->
+            <!-- <div class="login-form">-->
+            <!-- <form class="form" role="form" (ngSubmit)="login()">-->
+            <!-- <h2 class="text-center">WELCOME</h2>-->
+            <!-- <mat-form-field>-->
+            <!-- <input type="text" matInput name="username" id="username" placeholder="Username" [(ngModel)]="username">-->
+            <!-- </mat-form-field>-->
+            <!-- -->
+            <!-- <mat-form-field>-->
+            <!-- <input type="password" matInput name="password" id="password" placeholder="Password" [(ngModel)]="password"> -->
+            <!-- </mat-form-field>-->
+            <!-- -->
+            <!-- <button class="subBtn" type="submit" mat-raised-button color="primary" mat-button>Sign In</button>-->
+            <!-- </form>-->
+            <!-- </div>-->
+            <!-- </div>-->
+            <!-- </div>-->
+
+
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="login-form">
+                        <form class="form" role="form" (ngSubmit)="login()">
+                            <h2 class="text-center">WELCOME</h2>
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text span-label">
+                                        <fa name="user"></fa>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control inputGroup" name="username" id="username"
+                                    placeholder="Username" [(ngModel)]="username">
+                            </div>
+                            <div class="input-group form-group">
+
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text span-label">
+                                        <fa name="key"></fa>
+                                    </span>
+                                </div>
+                                <input type="password" class="form-control inputGroup" name="password" id="password"
+                                    placeholder="Password" [(ngModel)]="password">
+                            </div>
+                            <recaptcha-demo-wrapper>
+                                <re-captcha (resolved)="resolved($event)"
+                                    siteKey="6LemINQUAAAAAMAmDrsOJ5Oe7Iltizw0tBGf8fG-"></re-captcha>
+                            </recaptcha-demo-wrapper>
+                            <div class="input-group form-group">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                            </div>
+                            <div class="clearfix">
+                                <a (click)="requestResetPassword()" class="pull-right">Forgot Password?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

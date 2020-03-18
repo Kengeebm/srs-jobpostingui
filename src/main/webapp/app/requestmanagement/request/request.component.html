@@ -1,0 +1,71 @@
+<!-- Main Toolbar of an App -->
+<mat-card class="mt--9">
+    <mat-card-title>
+        Contact System Administrator
+    </mat-card-title>
+    <div class="col-12 text-left">
+        <button class="btn btn-primary" (click)="onBack()">Back</button>
+        <button class="btn btn-primary topRytBtn" routerLink="/requesthistory" routerLinkActive="active">Request History
+        </button>
+    </div>
+    <!-- Title of an Card -->
+    <mat-card-content>
+        <div>
+            <div>
+                <div>
+                    <mat-form-field appearance="outline" class="nameInput">
+                        <mat-label>Employee Name</mat-label>
+                        <input value="{{request.name}}"
+                               matInput [disabled]="true"
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <div colspan="2">
+                    <mat-form-field appearance="outline" class="nameInput">
+                        <mat-label>Message</mat-label>
+                        <textarea matInput placeholder="Type your Message here..." matTextareaAutosize
+                                  matAutosizeMinRows="10" [(ngModel)]="request.message" (change)="onChange()"
+                                  matAutosizeMaxRows="10"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="container">
+                <div style="text-align: start;">Upload Attachments</div>
+                <div class="card">
+                    <div>
+                        <p class="file-name" *ngIf="!file; else fileName"></p>
+                        <ng-template #fileName>
+                            <input matInput disabled [value]="file?.name">
+                        </ng-template>
+                    </div>
+                    <div>
+                        <input mat-raised-button type="file" #fileInput style="display: none" accept="image/*"
+                               (change)="onChangeFileInput()"/>
+                        <button mat-raised-button color="primary" class="file-select-button"
+                                (click)="onClickFileInputButton()">
+                            Choose File
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="container">
+                <div style="text-align: start;">Image Show</div>
+                <div class="card">
+                    <img [src]="imageDatashow" heigh="100" width="200">
+                </div>
+                <div class="card">
+                    <button (click)="imageClick()">show Image </button>
+                </div>
+            </div>-->
+            <div>
+                <div class="content-center">
+                    <button mat-raised-button color="accent" (click)="save()" [disabled]="!isChanges">Submit</button>
+                    <button mat-raised-button color="accent" (click)="clear()">Clear</button>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

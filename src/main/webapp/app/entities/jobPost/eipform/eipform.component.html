@@ -1,0 +1,195 @@
+<div class="container-fluid mt--9 mb-5 eipform">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-left">
+                            <button class="btn btn-primary" (click)="open(content)">Back</button>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #content let-modal>
+                    <div class=" modal-side modal-bottom-right modal-notify">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            </div>
+                            <div class="modal-body text-center">
+                                <h2>Are you sure you want to leave this page?</h2>
+                            </div>
+                            <div class="modal-footer flex-center">
+                                <button class="btn btn-md btn-primary" (click)="prevPage()" [disabled]='disable'>Leave
+                                    this Page</button>
+                                <button class="btn btn-md btn-primary" (click)="modal.dismiss('Cross click')"
+                                    [disabled]='disable'>Stay on this Page</button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <div class="card card-profile shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-9 order-lg-2">
+                            <div class="card-profile-image imgSize">
+                                <a href="javascript:void(0)">
+                                    <img src="../../../../assets/profile.png" alt="IMG" class="rounded-circle img1">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- <h6 class="heading-small text-muted mb-4">Employee Details</h6> -->
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-emailid">Employee ID<span
+                                            class="star"></span>
+                                        *</span></label>
+                                    <input type="text" id="input-emailid" [readonly]="!isEmployeeIdEditable"
+                                        class="form-control form-control-alternative" [(ngModel)]="eip.empId">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">Email address</label>
+                                    <input type="email" id="input-email" readonly
+                                        class="form-control form-control-alternative" [(ngModel)]="eip.email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">First Name</label>
+                                    <input type="text" id="input-username" readonly
+                                        class="form-control form-control-alternative" [(ngModel)]="eip.firstName"
+                                        pattern="[A-Za-z]+" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name">Last name</label>
+                                    <input type="text" id="input-first-name" readonly
+                                        class="form-control form-control-alternative" [(ngModel)]="eip.lastName"
+                                        pattern="[A-Za-z]+" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div [formGroup]="eip_form">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-phone">Phone</label>
+                                        <input type="text" class="form-control form-control-alternative"
+                                            formControlName="phone" [readonly]="!isEditable" [(ngModel)]="eip.contactNo"
+                                            (change)="changes()">
+                                        <span class="text-danger"
+                                            *ngIf="eip_form.controls['phone'].hasError('pattern') && (eip_form.controls['phone'].dirty || eip_form.controls['phone'].touched)">Please
+                                            enter valid phone number</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-experience">Experience</label>
+                                        <input type="text" id="input-experience" maxlength="2" [readonly]="!isEditable"
+                                            formControlName="experience" (change)="changes()"
+                                            class="form-control form-control-alternative" [(ngModel)]="eip.experience">
+                                        <span class="text-danger"
+                                            *ngIf="eip_form.controls['experience'].hasError('pattern') && (eip_form.controls['experience'].dirty || eip_form.controls['experience'].touched)">Please
+                                            enter valid years of experience</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-work-location">Work
+                                        Location</label>
+                                    <select type="text" id="input-work-location" [disabled]="!isEditable"
+                                        (change)="changes()" class="form-control form-control-alternative"
+                                        [(ngModel)]="eip.workLocation">
+                                        <option *ngFor="let location of locations" value={{location.name}}>
+                                            {{location.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">Position</label>
+                                    <select id="input-last-name" [disabled]="!isEditable" [(ngModel)]="eip.position"
+                                        (change)="changes()" class="form-control form-control-alternative">
+                                        <option *ngFor="let position of positions" value={{position.name}}>
+                                            {{position.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_startDate">Date of Joining</label>
+                                    <div class="input-group">
+                                        <input id="field_startDate" type="text"
+                                            class="form-control form-control-alternative" ngbDatepicker
+                                            #dateOfJoin="ngbDatepicker" (change)="changes()" name="startDate"
+                                            placeholder="Date of Joining" [readonly]="!isEditable"
+                                            [(ngModel)]="eip.dateOfJoin" /> <span class="input-group-append">
+                                            <button type="button" class="btn btn-primary" (click)="dateOfJoin.toggle()"
+                                                [disabled]="!isEditable">
+                                                <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-experience-srs">Experience with
+                                        SRS</label>
+                                    <input type="text" id="input-experience-srs" maxlength="2" [readonly]="!isEditable"
+                                        (change)="changes()" class="form-control form-control-alternative"
+                                        [(ngModel)]="eip.expWithSrs">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-projectCode">Project</label>
+                                    <input type="text" id="input-projectCode" readonly
+                                        class="form-control form-control-alternative" [(ngModel)]="eip.projectCode"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">Reporting Manager Email</label>
+                                    <input type="email" id="input-reportingManagerEmail" readonly
+                                        class="form-control form-control-alternative"
+                                        [(ngModel)]="eip.reportingManagerEmail" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" id="save-edit" class="btn btn-primary" (click)="forEdit()"
+                            [disabled]="isEditable">
+                            <fa-icon [icon]="'save'"></fa-icon>
+                            &nbsp;<span>Edit</span>
+                        </button>
+                        <button type="button" id="save" [disabled]="disableBtn" class="btn btn-primary"
+                            (click)="update()">
+                            <fa-icon [icon]="'save'"></fa-icon>
+                            &nbsp;<span>Save</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

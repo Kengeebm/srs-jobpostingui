@@ -1,0 +1,220 @@
+<div class="container-fluid mt--11 pb-2 pt-1">
+    <div class="col-4 text-left mb-2 mt--3">
+        <button class="btn btn-primary" (click)="open(content)" [disabled]='disableApply'>Back</button>
+    </div>
+    <ng-template #content let-modal>
+        <div class="modal-side modal-bottom-right modal-notify">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div> -->
+                <div class="modal-body text-center">
+                    <h2>Are you sure you want to leave this page?</h2>
+                </div>
+                <div class="modal-footer flex-center">
+                    <button class="btn btn-md btn-primary" (click)="prevPage()" [disabled]='disable'>Leave this Page
+                    </button>
+                    <button class="btn btn-md btn-primary" (click)="modal.dismiss('Cross click')" [disabled]='disable'>
+                        Stay on this Page
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2><strong> Apply Leave/WFH </strong></h2>
+                </div>
+                <form name="leaveForm" role="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm">
+                    <div class="card-body pb-0 pt-0">
+                        <div class="row">
+                            <div class="col-25 pl-4">
+                                <label><b>Employee Id<span style="color:red">*</span></b></label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="employeeId" [(ngModel)]="userDetailsLeave.employeeId"
+                                    [disabled]="true" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25 pl-4">
+                                <label><b>Request Type<span style="color:red">*</span></b></label>
+                            </div>
+                            <div class="col-75">
+                                <select type="text" [(ngModel)]="userDetailsLeave.leaveType" name="leaveType"
+                                    class="form-control" #leaveType="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && leaveType.invalid }" required
+                                    (change)="changes()">
+                                    <option *ngFor="let leaveType of leaveTypes" [value]='leaveType.name'>
+                                        {{leaveType.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf="f.submitted && leaveType.invalid" class="invalid-feedback">
+                                    <div *ngIf="leaveType.errors.required">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25 pl-4">
+                                <label><b>From<span style="color:red">*</span></b></label>
+                            </div>
+                            <div class="col-75">
+                                <input type="date" class="form-control" name="fromdate"
+                                    [(ngModel)]="userDetailsLeave.fromDate" #fromDate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && fromDate.invalid }" required
+                                    (change)="isWeekend(userDetailsLeave.fromDate,true)">
+                                <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+                                    <div *ngIf="fromDate.errors.required">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25 pl-4">
+                                <label><b> To<span style="color:red">*</span></b></label>
+                            </div>
+                            <div class="col-75">
+                                <input type="date" class="form-control" name="todate"
+                                    [(ngModel)]="userDetailsLeave.toDate" #toDate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && toDate.invalid }" required
+                                    (change)="isWeekend(userDetailsLeave.toDate,false)">
+                                <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+                                    <div *ngIf="toDate.errors.required">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25 pl-4">
+                                <label><b>Total Day(Apart Holidays)<span style="color:red">*</span></b></label>
+                            </div>
+                            <div class="col-75">
+                                <input type="number" id="days" name="days" min="0" max="30"
+                                    [(ngModel)]="userDetailsLeave.totalDays" (change)="changes()" readonly>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="!selectedLeaveType">
+                            <div class="col-25 pl-4">
+                                <label><b>Reason for Leave/WFH</b><span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-75">
+                                <textarea class="form-control" name="reasonForLeave"
+                                    [(ngModel)]="userDetailsLeave.reasonForLeave" #reasonForLeave="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && reasonForLeave.invalid }" required
+                                    placeholder="Mention the reason for Leave/WFH." style="resize: none"
+                                    (change)="changes()"
+                                    (change)="isWeekend(userDetailsLeave.reasonForLeave,false)"></textarea>
+                                <div *ngIf="f.submitted && reasonForLeave.invalid" class="invalid-feedback">
+                                    <div *ngIf="reasonForLeave.errors.required">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="selectedLeaveType">
+                            <div class="col-25 pl-4">
+                                <label><b>Reason for Comp-Off</b><span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-75">
+                                <textarea class="form-control" name="reasonForLeave"
+                                    [(ngModel)]="userDetailsLeave.reasonForLeave" #reasonForLeave="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && reasonForLeave.invalid }" required
+                                    placeholder="mention the dates where you have worked and dates when you want to avail as comp-offs."
+                                    style="resize: none" (change)="changes()"
+                                    (change)="isWeekend(userDetailsLeave.reasonForLeave,false)"></textarea>
+                                <div *ngIf="f.submitted && reasonForLeave.invalid" class="invalid-feedback">
+                                    <div *ngIf="reasonForLeave.errors.required">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit
+                            </button>
+                            <button type="button" class="btn btn-primary" (click)="reset(f)">Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row mb-2">
+                <div class="col-lg-12">
+                    <div class="card public-holiday">
+                        <div class="card-header text-center">
+                            <h3><strong>Applied Leaves/WFH</strong></h3>
+                            <button id="leave-history" class="btn btn-primary" style="float: right;" routerLink="/leave-history" routerLinkActive="active">
+                                Leave History
+                            </button>
+                        </div>
+                        <div class="card-body pb-0 pt-0">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th class="th-sm">Request Type</th>
+                                            <th class="th-sm">From Date</th>
+                                            <th class="th-sm">To Date</th>
+                                            <th class="th-sm">Status</th>
+                                            <th class="th-sm">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let userDetailLeave of dataSource; let i = index">
+                                            <td>{{i + 1 }}</td>
+                                            <td>{{userDetailLeave.leaveType}}</td>
+                                            <td>{{userDetailLeave.fromDate | date: "dd/MM/yyyy"}}</td>
+                                            <td>{{userDetailLeave.toDate | date: "dd/MM/yyyy"}}</td>
+                                            <td>{{userDetailLeave.status}}</td>
+                                            <td><button mat-button color="error"
+                                                    (click)="openCancelDialog(userDetailLeave)">Cancel</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div *ngIf="noData" class="no-records">
+                                    No pending leaves record found...<br>
+                                    Click on Leave History to check Approved/Rejected leave details
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card public-holiday">
+                        <div class="card-header text-center">
+                            <h3><strong>Holidays List</strong></h3>
+                        </div>
+                        <div class="card-body pb-0 pt-0">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th class="th-sm">Holiday</th>
+                                            <th class="th-sm">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let holiday of publicHolidays; let i = index">
+                                            <td>{{i + 1 }}</td>
+                                            <td>{{holiday.name}}</td>
+                                            <td>{{holiday.date | date: "dd/MM/yyyy"}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

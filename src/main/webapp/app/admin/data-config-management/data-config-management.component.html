@@ -1,0 +1,309 @@
+<div class="wrapper mt--9">
+    <nav id="sidebar">
+        <ul class="list-unstyled navbar navbar-expand-sm bg-nav-back navbar-light">
+            <li [ngClass]="{'active': selectionEvent == 'Experience'}"><a
+                    (click)="selectionElement('Experience')">EXPERIENCE</a>
+            </li>
+            <li [ngClass]="{'active': selectionEvent == 'Client Name'}"><a
+                    (click)="selectionElement('Client Name')">CLIENT
+                    NAME</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'User Name'}"><a (click)="selectionElement('User Name')">USER
+                    NAME</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'Location'}"><a
+                    (click)="selectionElement('Location')">LOCATION</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'Position'}"><a
+                    (click)="selectionElement('Position')">POSITION</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'No Of Jobs'}"><a (click)="selectionElement('No Of Jobs')">NO OF
+                    JOB</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'LeaveType'}"><a (click)="selectionElement('LeaveType')">LEAVE
+                    TYPE</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'Status'}"><a (click)="selectionElement('Status')">STATUS</a>
+            </li>
+            <li [ngClass]="{'active': selectionEvent == 'PublicHolidays'}"><a
+                    (click)="selectionPublicHolidaysElement('PublicHolidays')">PUBLIC HOLIDAYS</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'Project'}"><a
+                    (click)="selectionProjectElement('Project')">PROJECT</a></li>
+            <li [ngClass]="{'active': selectionEvent == 'Reporting Manager'}"><a
+                    (click)="selectionReportingManagerElement('Reporting Manager')">REPORTING MANAGER</a></li>
+        </ul>
+    </nav>
+    <div id="content">
+        <div class="container">
+            <div class="container-fluid row">
+                <div class="col-12 card">
+                    <div class="container">
+                        <div class="danger-box">
+                            <div class="alert alert-success alert-dismissible" *ngIf="isShowAlertDelete">
+                                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            </div>
+                            <div class="alert alert-success alert-dismissible" *ngIf="isShowAlertSave">
+                                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label-control">
+                                <h2>{{selectionEvent}}</h2>
+                            </label>
+                        </div>
+
+                        <div
+                            *ngIf="selectionEvent!=='PublicHolidays' && selectionEvent!=='Project'  && selectionEvent!=='Reporting Manager'">
+                            <form name="editForm" role="form" novalidate (ngSubmit)="selectionSave()"
+                                #editForm="ngForm">
+                                <div class="col-12">
+                                    <input class="form-control" id="selectionDataId" name="name"
+                                        [(ngModel)]="selectionData.name" placeholder="Enter {{selectionEvent}}"
+                                        type="text" [value]="selectionData.name" required #nameInput="ngModel">
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary" [disabled]="editForm.form.invalid">Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div *ngIf="selectionEvent == 'PublicHolidays'">
+                            <form name="editForm" role="form" novalidate (ngSubmit)="selectionPublicHolidaysSave()"
+                                #editForm="ngForm">
+                                <div class="col-12">
+                                    <input class="form-control" [(ngModel)]="selectionPublicHolidaysData.name"
+                                        name="name" placeholder="Enter {{selectionEvent}} name" type="text"
+                                        [value]="selectionPublicHolidaysData.name" required #nameInput="ngModel">
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-control" name="date"
+                                        [(ngModel)]="selectionPublicHolidaysData.date"
+                                        placeholder="Enter {{selectionEvent}} date" type="date"
+                                        [value]="selectionPublicHolidaysData.date" required #dateInput="ngModel">
+                                </div>
+                                <div class="col-12">
+                                    <select name="projectCode" class="form-control"
+                                        [(ngModel)]="selectionPublicHolidaysData.projectCode"
+                                        #projectCodeInput="ngModel" required>
+                                        <option [ngValue]="undefined" hidden>Select Project Code</option>
+                                        <option *ngFor="let codes of selectionProjectList" [value]='codes.projectCode'>
+                                            {{codes.projectCode}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button id="save-btn" class="btn btn-primary"
+                                        [disabled]="editForm.form.invalid">Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="selectionEvent =='Project' && selectionEvent!=='PublicHolidays'">
+                            <form name="editForm" role="form" novalidate (ngSubmit)="selectionProjectSave()"
+                                #editForm="ngForm">
+                                <div class="col-12">
+                                    <input class="form-control" [(ngModel)]="selectionProjectData.name" name="name"
+                                        placeholder="Enter name" type="text" [value]="selectionProjectData.name"
+                                        required #nameInput="ngModel">
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-control" name="projectCode"
+                                        [(ngModel)]="selectionProjectData.projectCode" placeholder="Enter Project Code"
+                                        type="text" [value]="selectionProjectData.projectCode" required
+                                        #projectCodeInput="ngModel">
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button id="save-btn" class="btn btn-primary"
+                                        [disabled]="editForm.form.invalid">Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="selectionEvent =='Reporting Manager'">
+                            <form name="editForm" role="form" novalidate (ngSubmit)="selectionReportingManagerSave()"
+                                #editForm="ngForm">
+                                <div class="col-12">
+                                    <input class="form-control"
+                                        [(ngModel)]="selectionReportingManagerData.reportingManagerId"
+                                        name="reportingManagerId" placeholder="Enter Id" type="text"
+                                        [value]="selectionReportingManagerData.reportingManagerId" required
+                                        #reportingManagerIdInput="ngModel">
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-control"
+                                        [(ngModel)]="selectionReportingManagerData.reportingManagerName"
+                                        name="reportingManagerName" placeholder="Enter name" type="text"
+                                        [value]="selectionReportingManagerData.reportingManagerName" required
+                                        #reportingManagerNameInput="ngModel">
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-control" name="reportingManagerEmail"
+                                        [(ngModel)]="selectionReportingManagerData.reportingManagerEmail"
+                                        placeholder="Enter Email" type="text"
+                                        [value]="selectionReportingManagerData.reportingManagerEmail" required
+                                        #reportingManagerEmailInput="ngModel">
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button id="save-btn" class="btn btn-primary"
+                                        [disabled]="editForm.form.invalid">Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 card spacing">
+                    <div class="table-responsive text-center">
+                        <table class="table table-striped"
+                            *ngIf="selectionEvent !== 'PublicHolidays' && selectionEvent !== 'Project'  && selectionEvent !== 'Reporting Manager'">
+                            <thead>
+                                <tr>
+                                    <th><span>NAME</span>
+                                    </th>
+                                    <th><span>Action</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let selection of selectionList | paginate: { itemsPerPage: 50, currentPage: page } ">
+                                    <td>{{selection.name}}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                (click)="editItem(selection.id)">
+                                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                <span class="d-none d-md-inline">Edit</span>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="deleteItem(selection.id)">
+                                                <fa-icon [icon]="'times'"></fa-icon>
+                                                <span class="d-none d-md-inline">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-striped " *ngIf="selectionEvent =='PublicHolidays'">
+                            <thead>
+                                <tr>
+                                    <th><span>DATE</span>
+
+                                    </th>
+                                    <th><span>NAME</span>
+
+                                    </th>
+                                    <th><span>Project Code</span>
+
+                                    </th>
+                                    <th><span>Action</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let selectHolidays of selectionPublicHolidaysList | paginate: { itemsPerPage: 50, currentPage: page } ">
+                                    <td>{{selectHolidays.date | date : 'dd/MM/yyyy' }}</td>
+                                    <td>{{selectHolidays.name}}</td>
+                                    <td>{{selectHolidays.projectCode}}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                (click)="editPublicHolidays(selectHolidays.id)">
+                                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                <span class="d-none d-md-inline">Edit</span>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="deletePublicHolidays(selectHolidays.id)">
+                                                <fa-icon [icon]="'times'"></fa-icon>
+                                                <span class="d-none d-md-inline">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-striped "
+                            *ngIf="selectionEvent =='Project' && selectionElement!=='PublicHolidays'">
+                            <thead>
+                                <tr>
+                                    <th><span>NAME</span>
+                                    </th>
+                                    <th><span>Project Code</span>
+                                    </th>
+                                    <th><span>Action</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let selectProject of selectionProjectList | paginate: { itemsPerPage: 50, currentPage: page } ">
+                                    <td>{{selectProject.name}}</td>
+                                    <td>{{selectProject.projectCode}}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                (click)="editProject(selectProject.id)">
+                                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                <span class="d-none d-md-inline">Edit</span>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="deleteProject(selectProject.id)">
+                                                <fa-icon [icon]="'times'"></fa-icon>
+                                                <span class="d-none d-md-inline">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-striped" *ngIf="selectionEvent =='Reporting Manager'">
+                            <thead>
+                                <tr>
+                                    <th><span>ID</span>
+                                    </th>
+                                    <th><span>NAME</span>
+                                    </th>
+                                    <th><span>EMAIL</span>
+                                    </th>
+                                    <th><span>Action</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let selectReportingManager of selectionReportingManagerList | paginate: { itemsPerPage: 50, currentPage: page } ">
+                                    <td>{{selectReportingManager.reportingManagerId}}</td>
+                                    <td>{{selectReportingManager.reportingManagerName}}</td>
+                                    <td>{{selectReportingManager.reportingManagerEmail}}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                (click)="editReportingManager(selectReportingManager.id)">
+                                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                <span class="d-none d-md-inline">Edit</span>
+                                            </button> 
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="deleteReportingManager(selectReportingManager.id)">
+                                                <fa-icon [icon]="'times'"></fa-icon>
+                                                <span class="d-none d-md-inline">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div [hidden]="selectionList?.length === 0">
+                        <div class="row justify-content-center">
+                            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5"
+                                            [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                        </div>
+                        <div class="row justify-content-center">
+                            <ngb-pagination [collectionSize]="selectionList.length" [(page)]="page"
+                                            [pageSize]="5" [maxSize]="5" [rotate]="true"
+                                            [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                        </div>
+                    </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>

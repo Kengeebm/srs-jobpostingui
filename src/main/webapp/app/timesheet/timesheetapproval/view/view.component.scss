@@ -1,0 +1,30 @@
+tr {
+  background-color: #f1f1f1;
+  color: #000 !important;
+}
+
+.red {
+  background-color: red !important;
+  color: #fff;
+}
+
+.green {
+  background-color: green !important;
+  color: #fff;
+}
+
+td {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card {
+  margin: 0px 50px 0px 50px;
+}
+
+.btn {
+  margin-left: 1rem !important;
+  margin-top: 1rem !important;
+}

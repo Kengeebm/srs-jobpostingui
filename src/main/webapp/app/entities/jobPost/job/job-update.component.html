@@ -1,0 +1,197 @@
+<div class="container mt--9 pb-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-12 col-md-12">
+			<div class="box bg-secondary shadow border-0">
+				<div class="row justify-content-center">
+					<div class="col-10">
+						<form name="editForm" role="form" novalidate (ngSubmit)="save()"
+							[formGroup]="editForm">
+							<div >
+								<button class="btn btn-primary" (click)="open(content)" [disabled]='disableApply'>Back</button>
+							</div>
+							<h2 id="jhi-job-heading" class="text-center">Create Job</h2>
+							<div class="row">
+								<div class="col-lg-6">
+									<jhi-alert-error></jhi-alert-error>
+									<div class="form-group">
+										<label class="form-control-label" for="field_noOfPosition">No
+											Of Position</label> <select id="field_noOfPosition"
+											class="form-control" name="field_noOfPosition"
+											formControlName="noOfPosition">
+											<option *ngFor="let jobNumber of JobNumberList"
+												value="{{jobNumber.name}}">{{jobNumber.name}}</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_location">Location</label>
+										<select class="form-control" id="field_location"
+											name="location" formControlName="location">
+											<option *ngFor="let jobNumber of locationList"
+												value="{{jobNumber.name}}">{{jobNumber.name}}</option>
+										</select>
+
+										<div
+											*ngIf="editForm.get('location').invalid && (editForm.get('location').dirty || editForm.get('location').touched)">
+											<small class="form-text text-danger"
+												*ngIf="editForm.get('location').errors.required">
+												This field is required. </small>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_fromExp">From
+											Exp Req</label> <select id="field_fromExp" class="form-control"
+											name="fromExp" formControlName="fromExp">
+											<option *ngFor="let experienceNo of experenceRequiredList"
+												value="{{experienceNo.name}}">{{experienceNo.name}}</option>
+										</select>
+									</div>
+
+
+
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_startDate">Start
+											Date</label>
+										<div class="input-group">
+											<input id="field_startDate" type="text" class="form-control"
+												name="startDate" ngbDatepicker #startDateDp="ngbDatepicker"
+												formControlName="startDate" /> <span
+												class="input-group-append">
+												<button type="button" class="btn btn-primary"
+													(click)="startDateDp.toggle()">
+													<fa-icon [icon]="'calendar-alt'"></fa-icon>
+												</button>
+											</span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_assigned">Assign To</label>
+										<select id="field_assigned" class="form-control"
+											name="assignee" formControlName="assignee" multiple="multiple">
+											<option *ngFor="let auth of authorities" value="{{auth}}">{{auth}}</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_comments">Comments</label>
+										<textarea class="form-control" name="comments"
+											id="field_comments" formControlName="comments" cols="12"
+											rows="4" maxlength="200" maxlength="100" style="resize: none"></textarea>
+									</div>
+									<!-- <div class="form-group">
+                        <label>Profiles</label>
+                        <select class="form-control" multiple name="authority" [(ngModel)]="user.authorities">
+                            <option *ngFor="let authority of authorities" [value]="authority">{{authority}}</option>
+                        </select>
+                    </div> -->
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label class="form-control-label" for="field_clientName">Client
+											Name</label> <select id="field_clientName" class="form-control"
+											name="clientName" formControlName="clientName">
+											<option *ngFor="let client of clientNameList"
+												value="{{client.name}}">{{client.name}}</option>
+										</select>
+
+										<div
+											*ngIf="editForm.get('clientName').invalid && (editForm.get('clientName').dirty || editForm.get('clientName').touched)">
+											<small class="form-text text-danger"
+												*ngIf="editForm.get('clientName').errors.required">
+												This field is required. </small>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="form-control-label" for="field_positionName">Position
+											Name</label> <select id="field_positionName" class="form-control"
+											name="positionName" formControlName="positionName">
+											<option *ngFor="let position of positionList"
+												value="{{position.name}}">{{position.name}}</option>
+										</select>
+										<div
+											*ngIf="editForm.get('positionName').invalid && (editForm.get('positionName').dirty || editForm.get('positionName').touched)">
+											<small class="form-text text-danger"
+												*ngIf="editForm.get('positionName').errors.required">
+												This field is required. </small>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="form-control-label" for="field_toExp">To
+											Exp Req</label> <select id="field_toExp" class="form-control"
+											name="fromExp" formControlName="toExp">
+											<option *ngFor="let experienceNo of experenceRequiredList"
+												value="{{experienceNo.name}}">{{experienceNo.name}}</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_endDate">End
+											Date</label>
+										<div class="input-group">
+											<input id="field_endDate" type="text" class="form-control"
+												name="endDate" ngbDatepicker #endDateDp="ngbDatepicker"
+												formControlName="endDate" /> <span
+												class="input-group-append">
+												<button type="button" class="btn btn-primary"
+													(click)="endDateDp.toggle()">
+													<fa-icon [icon]="'calendar-alt'"></fa-icon>
+												</button>
+											</span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_filledPosition">Filled
+											Position</label> <select id="field_filledPosition"
+											class="form-control" name="filledPosition"
+											formControlName="filledPosition">
+											<option *ngFor="let exp of experenceRequiredList"
+												value="{{exp.name}}">{{exp.name}}</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label class="form-control-label" for="field_jobDesc">Job
+											Desc</label>
+										<!-- <textarea class="form-control" name="jobDesc"
+											id="field_jobDesc" formControlName="jobDesc" cols="12"
+											rows="4" style="resize: none"></textarea> -->
+										<textarea class="form-control" [(ngModel)]="content" bulletInTextBox
+											(focus)="mytextOnFocus()"  (keyup)="addBulletText($event)" name="jobDesc"
+											id="field_jobDesc" formControlName="jobDesc" cols="12"
+											rows="4" style="resize: none"></textarea>
+										<div
+											*ngIf="editForm.get('jobDesc').invalid && (editForm.get('jobDesc').dirty || editForm.get('jobDesc').touched)">
+											<small class="form-text text-danger"
+												*ngIf="editForm.get('jobDesc').errors.required">
+												This field is required. </small> <small
+												class="form-text text-danger"
+												*ngIf="editForm.get('jobDesc').errors.maxlength">
+												This field cannot be longer than 1000 characters. </small>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="text-center">
+								<button type="button" id="cancel-save" class="btn btn-secondary"
+									(click)="previousState()">
+									<fa-icon [icon]="'ban'"></fa-icon>
+									&nbsp;<span>Cancel</span>
+								</button>
+								<button type="submit" id="save-entity"
+									[disabled]="editForm.invalid || isSaving"
+									class="btn btn-primary">
+									<fa-icon [icon]="'save'"></fa-icon>
+									&nbsp;<span>Save</span>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

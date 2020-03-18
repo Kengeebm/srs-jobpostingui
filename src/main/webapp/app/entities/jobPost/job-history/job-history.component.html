@@ -1,0 +1,128 @@
+<div class="container-fluid pb-5  mt--9">
+	<div class="block-body row justify-content-center">
+		<div class="col-lg-12 col-md-12">
+			<div class="box bg-secondary shadow border-0">
+				<div class="card-body px-lg-2 py-lg-2">
+					<div>
+						<div class="row">
+							<div class="bck-btn col-sm-2">
+									<button class="btn btn-md btn-primary" [routerLink]="['/job']" id="back Button">BACK</button>
+								</div>
+								<div class="col-sm-10">
+										<h2 id="page-heading" class="text-center">
+												<span>JOB HISTORY</span>
+											</h2>
+							  </div>
+							</div>
+						<jhi-alert></jhi-alert>
+						<div class="alert alert-warning"
+							*ngIf="jobHistories?.length === 0">
+							<span>No jobHistories found</span>
+						</div>
+						<div class="table-responsive text-center" *ngIf="jobHistories?.length > 0">
+							<table class="table table-striped">
+								<thead>
+									<tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"
+										[callback]="transition.bind(this)">
+										<th jhiSortBy="id" hidden><span>ID</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="jobId"><span>Job Id</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="clientName"><span>Client Name</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="noOfPosition"><span>No Of Position</span>
+											<fa-icon [icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="positionName"><span>Position Name</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="location"><span>Location</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="jobDesc"><span>Job Description</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="expReq"><span>Experience Req</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="filledPosition"><span>Filled
+												Position</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="comments"><span>Comments</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="startDate"><span>Start Date</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="endDate"><span>End Date</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="closedOn"><span>Closed On</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="openedBy"><span>Opened By</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="closedBy"><span>Closed By</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="updatedBy"><span>Updated By</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<th jhiSortBy="updatedDate"><span>Updated Date</span> <fa-icon
+												[icon]="'sort'"></fa-icon></th>
+										<!-- <th text-center>Action</th> -->
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let jobHistory of jobHistories ;trackBy: trackId">
+										<td hidden><a
+											[routerLink]="['/job-history', jobHistory.id, 'view' ]">{{jobHistory.id}}</a></td>
+										<td>{{jobHistory.jobId!=null? jobHistory.jobId:'-' }}</td>
+										<td>{{jobHistory.clientName!=null? jobHistory.clientName : '-' }}</td>
+										<td>{{jobHistory.noOfPosition!=null? jobHistory.noOfPosition : '-' }}</td>
+										<td>{{jobHistory.positionName!=null? jobHistory.positionName : '-' }}</td>
+										<td>{{jobHistory.location!=null? jobHistory.location : '-' }}</td>
+										<td>{{jobHistory.jobDesc!=null? jobHistory.jobDesc : '-' }}</td>
+										<td>{{jobHistory.expReq!=null ? jobHistory.expReq : '-' }}</td>
+										<td>{{jobHistory.filledPosition!=null ? jobHistory.filledPosition : '-'}}</td>
+										<td>{{jobHistory.comments!=null ? jobHistory.comments : '-'}}</td>
+										<td>{{jobHistory.startDate!=null?(jobHistory.startDate | date:'mediumDate'): '-'}}</td>
+										<td>{{jobHistory.endDate!=null?(jobHistory.endDate | date:'mediumDate') : '-'}}</td>
+										<td>{{jobHistory.closedOn!=null?( jobHistory.closedOn | date:'mediumDate'):'-'}}</td>
+										<td>{{jobHistory.openedBy!=null? jobHistory.openedBy : '-'}}</td>
+										<td>{{jobHistory.closedBy!=null ? jobHistory.closedBy: '-'}}</td>
+										<td>{{jobHistory.updatedBy!=null? jobHistory.updatedBy: '-'}}</td>
+										<td>{{jobHistory.updatedDate!=null?(jobHistory.updatedDate | date:'mediumDate'):'-'}}</td>
+										<td class="text-right">
+											<!-- <div class="btn-group">
+												<button type="submit"
+													[routerLink]="['/job-history', jobHistory.id, 'view' ]"
+													class="btn btn-info btn-sm">
+													<fa-icon [icon]="'eye'"></fa-icon>
+													<span class="d-none d-md-inline">View</span>
+												</button>
+												<button type="submit"
+													[routerLink]="['/job-history', jobHistory.id, 'edit']"
+													class="btn btn-primary btn-sm">
+													<fa-icon [icon]="'pencil-alt'"></fa-icon>
+													<span class="d-none d-md-inline">Edit</span>
+												</button>
+												<button type="submit"
+													[routerLink]="['/', 'job-history', { outlets: { popup: jobHistory.id + '/delete'} }]"
+													replaceUrl="true" queryParamsHandling="merge"
+													class="btn btn-danger btn-sm">
+													<fa-icon [icon]="'times'"></fa-icon>
+													<span class="d-none d-md-inline">Delete</span>
+												</button>
+											</div> -->
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div [hidden]="jobHistories?.length === 0">
+							<div class="row justify-content-center">
+								<jhi-item-count [page]="page" [total]="totalItems" [maxSize]="itemsPerPage"
+									[itemsPerPage]="itemsPerPage"></jhi-item-count>
+							</div>
+							<div class="row justify-content-center">
+								<ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+									[pageSize]="itemsPerPage" [maxSize]="itemsPerPage" [rotate]="true"
+									[boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

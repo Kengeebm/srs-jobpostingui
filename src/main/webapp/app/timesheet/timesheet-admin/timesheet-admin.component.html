@@ -1,0 +1,313 @@
+<div class="container-fluid mt--9 mb-5">
+    <button class="btn btn-primary backBtn topBtn mt--4" (click)="onBackButtonEvent()" [disabled]='disableBack'>
+        Back
+    </button>
+    <div class="card">
+        <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+            <mat-tab label="Submitted List" value="submittedList">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-class">
+                            <mat-form-field>
+                                <input matInput readonly [matDatepicker]="dpSubmitted"
+                                    placeholder="Search - Month and Year" [(ngModel)]="startDateSubmitted"
+                                    (dateInput)="applyFilter1($event.target.value)"
+                                    (keyup)="applyFilter1($event.target.value)">
+                                <mat-datepicker-toggle matSuffix [for]="dpSubmitted"></mat-datepicker-toggle>
+                                <mat-datepicker #dpSubmitted startView="multi-year" [startAt]="startDateSubmitted"
+                                    (monthSelected)="chosenMonthHandlerSubmitted($event, dpSubmitted)"></mat-datepicker>
+                            </mat-form-field>
+                                <mat-form-field style="float: right;">
+                                    <input matInput (keyup)="nameByFilterSubmittedList($event.target.value)"
+                                        placeholder="Search by UserName">
+                                </mat-form-field>
+                        </div>
+                        <table #filteredTable mat-table [dataSource]="timeSheetSubmittedDataSource"
+                            class="mat-elevation-z8" #sort1="matSort" matSort>
+
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggle1() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="userName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submited Date</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.submitDate | date:'dd-MM-yyy'}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submitted Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitTime}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approveStatus">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approveStatus}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[10,100,1000,totalNoRows]" showFirstLastButtons
+                            #paginator1>
+                        </mat-paginator>
+                        <div class="card">
+                            <div class="row subBtn">
+                                <div class="class optBtn">
+                                    <mat-form-field>
+                                        <mat-label>Choose an action</mat-label>
+                                        <mat-select [(ngModel)]="selectedOption" [disabled]='dataNotExist'>
+                                            <mat-option value="Approved">Approve</mat-option>
+                                            <mat-option value="Rejected">Reject</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <button [disabled]='dataNotExist' color="primary" mat-raised-button
+                                        (click)="submit()">Submit
+                                    </button>
+                                </div>
+                                <div>
+                                    <button [disabled]='dataNotExist' color="primary" mat-raised-button
+                                        (click)="generateExcel()">Download(Selected)
+                                    </button>
+                                </div>
+                                <div>
+                                    <button color="primary" mat-raised-button [disabled]="noData"
+                                        (click)="downloadAll()">Download All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Pending List" (click)='selectTab(submittedList)' value="pendingList">
+                <div class="container-fluid">
+                    <div class="card">
+                        <!-- <div class="input-class"> -->
+                            <!-- <mat-form-field>
+                                <input matInput (keyup)="nameByFilterPendingList($event.target.value)" placeholder="Search by Name">
+                            </mat-form-field> -->
+                            <div class="input-name">
+                                <mat-form-field>
+                                    <input matInput (keyup)="nameByFilterPendingLists($event.target.value)"
+                                        placeholder="Search by Employee Name">
+                                </mat-form-field>
+                            </div>
+                        <!-- </div> -->
+                        <table mat-table [dataSource]="timeSheetPendingDataSource" class="mat-elevation-z8"
+                            #sort2="matSort" matSort>
+
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggle2() : null"
+                                        [checked]="selectionIE.hasValue() && isAllSelectedIe()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelectedIe()"
+                                        [aria-label]="checkboxLabel()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selectionIE.toggle(row) : null"
+                                        [checked]="selectionIE.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="firstName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.firstName}}</td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"
+                                (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+
+                        <mat-paginator [pageSizeOptions]="[10,100,1000,totalNoRows]" showFirstLastButtons #paginator2>
+                        </mat-paginator>
+                        <div class="card">
+                            <div class="row subBtn">
+                                <div>
+                                    <button color="primary" [disabled]='PendingDataNotExist' mat-raised-button
+                                        (click)="sendMail()">Send a Remainder
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Approved List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-class">
+                            <mat-form-field>
+                                <input matInput readonly [matDatepicker]="dpApproved"
+                                    placeholder="Search - Month and Year" [(ngModel)]="startDateApproved"
+                                    (dateInput)="applyFilter3($event.target.value)"
+                                    (keyup)="applyFilter3($event.target.value)">
+                                <mat-datepicker-toggle matSuffix [for]="dpApproved"></mat-datepicker-toggle>
+                                <mat-datepicker #dpApproved startView="multi-year" [startAt]="startDateApproved"
+                                    (monthSelected)="chosenMonthHandlerApproved($event, dpApproved)"></mat-datepicker>
+                            </mat-form-field>
+                                <mat-form-field style="float: right;">
+                                    <input matInput (keyup)="nameByFilterApprovedLists($event.target.value)"
+                                        placeholder="Search by UserName">
+                                </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="timeSheetApprovedDataSource" class="mat-elevation-z8"
+                            #sort3="matSort" matSort>
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="userName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submitted Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitDate | date:'dd-MM-yyy'}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submitted Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitTime}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approveStatus">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approveStatus}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedBy">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved By</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedBy}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedDate | date: 'dd-MM-yyy'}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;">
+                            </tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[10,100,1000,totalNoRows]" showFirstLastButtons #paginator3>
+                        </mat-paginator>
+                        <div class="card">
+                            <div class="row subBtn">
+                                <div>
+                                    <button color="primary" [disabled]='noData' mat-raised-button
+                                        (click)="downloadAll()">Download All
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Unfreeze List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-class">
+                            <mat-form-field>
+                                <input matInput readonly [matDatepicker]="dpUnfreezed"
+                                    placeholder="Search - Month and Year" [(ngModel)]="startDateUnfreezed"
+                                    (dateInput)="applyFilter4($event.target.value)"
+                                    (keyup)="applyFilter4($event.target.value)">
+                                <mat-datepicker-toggle matSuffix [for]="dpUnfreezed"></mat-datepicker-toggle>
+                                <mat-datepicker #dpUnfreezed startView="multi-year" [startAt]="startDateUnfreezed"
+                                    (monthSelected)="chosenMonthHandlerUnfreezed($event, dpUnfreezed)"></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field style="float: right;">
+                                <input matInput (keyup)="nameByFilterUnfreezedList($event.target.value)"
+                                    placeholder="Search by UserName">
+                            </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="timeSheetUnfreezeDataSource" class="mat-elevation-z8"
+                            #sort4="matSort" matSort>
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="userName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="submitDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submited Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitDate | date:'dd-MM-yyy'}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submitted Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitTime}}</td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns3;">
+                            </tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[10,100,1000,totalNoRows]" showFirstLastButtons #paginator4>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

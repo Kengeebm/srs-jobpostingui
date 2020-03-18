@@ -1,0 +1,470 @@
+<div class="container-fluid mt--9 mb-5">
+    <button class="btn btn-primary backBtn topBtn mt--4" (click)="onBackButtonEvent()" [disabled]='disableBack'>
+        Back
+    </button>
+    <div class="card">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <mat-label class="header">Timsheet Details:</mat-label>
+                </div>
+                <div class="header-body">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card  mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-info">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Requested
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{timeSheetPendingCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-success">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Approved
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span
+                                                class="h2 font-weight-bold mb-0">{{timeSheetApprovedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-danger">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Rejected
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{timeSheetRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-warning">
+                                    <h5 class="card-title text-uppercase text-white mb-0" id="total">
+                                        Total
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{timeSheetPendingCount + timeSheetApprovedCount + timeSheetRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <mat-label class="header">Sick Leave Details:</mat-label>
+                </div>
+                <div class="header-body">
+                    <!-- Card stats -->
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-info">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Requested
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{SLSubmittedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-success">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Approved
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{SLApprovedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-danger">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Rejected
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{SLRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-warning">
+                                    <h5 class="card-title text-uppercase text-white mb-0" id="total">
+                                        Total
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{SLSubmittedCount + SLApprovedCount + SLRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <mat-label class="header">Casual Leave Details:</mat-label>
+                </div>
+                <div class="header-body">
+                    <!-- Card stats -->
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-info">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Requested
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{CLSubmittedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-success">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Approved
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{CLApprovedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-danger">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Rejected
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{CLRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-warning">
+                                    <h5 class="card-title text-uppercase text-white mb-0" id="total">
+                                        Total
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{CLSubmittedCount + CLApprovedCount + CLRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <mat-label class="header">WFH Details:</mat-label>
+                </div>
+                <div class="header-body">
+                    <!-- Card stats -->
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-info">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Requested
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WFHSubmittedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-success">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Approved
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WFHApprovedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats-wfh mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-danger">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Rejected
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WFHRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats-wfh mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-warning">
+                                    <h5 class="card-title text-uppercase text-white mb-0" id="total">
+                                        Total
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WFHSubmittedCount + WFHApprovedCount + WFHRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <mat-label class="header">WCL Details:</mat-label>
+                </div>
+                <div class="header-body">
+                    <!-- Card stats -->
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-info">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Requested
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WCLSubmittedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-success">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Approved
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WCLApprovedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats-wfh mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-danger">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Rejected
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WCLRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats-wfh mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-warning">
+                                    <h5 class="card-title text-uppercase text-white mb-0" id="total">
+                                        Total
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{WCLSubmittedCount + WCLApprovedCount + WCLRejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <mat-label class="header">CO Details:</mat-label>
+                </div>
+                <div class="header-body">
+                    <!-- Card stats -->
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-info">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Requested
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{COSubmittedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-success">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Approved
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{COApprovedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats-wfh mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-danger">
+                                    <h5 class="card-title text-uppercase text-white mb-0">
+                                        Rejected
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{CORejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats-wfh mb-4 mb-xl-0" color="primary">
+                                <div class="card-header bg-warning">
+                                    <h5 class="card-title text-uppercase text-white mb-0" id="total">
+                                        Total
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="h2 font-weight-bold mb-0">{{COSubmittedCount + COApprovedCount + CORejectedCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            
+        </div>
+    </div>
+</div>

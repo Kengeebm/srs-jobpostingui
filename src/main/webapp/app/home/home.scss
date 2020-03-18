@@ -1,0 +1,27 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+.span-label {
+  background: #172b4d !important;
+}
+
+.inputGroup {
+  padding-left: 20px !important;
+}
+
+.subBtn {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 414px) {
+  .input-group-prepend {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    max-height: 36px !important;
+  }
+}
+
+.text-center {
+  font-weight: bold;
+}

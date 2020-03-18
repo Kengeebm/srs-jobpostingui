@@ -1,0 +1,125 @@
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col-xl-8 order-xl-1" style="margin: 0 auto;">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-12 text-center text-uppercase">
+                            <h3 class="mb-0">{{user.firstName + ' ' + user.lastName + " Details" }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="col-4 text-left mb-2 mt--3">
+                                <button class="btn btn-primary" (click)="open(content)"
+                                    [disabled]='disableApply'>Back</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="form-control-label">UserName</label>
+                                <label class="form-control form-control-alternative">{{user.login}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">First Name</label>
+                                    <label class="form-control form-control-alternative">{{user.firstName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Last Name</label>
+                                    <label class="form-control form-control-alternative">{{user.lastName}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Email</label>
+                                    <label class="form-control form-control-alternative">{{user.email}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Created By</label>
+                                    <label class="form-control form-control-alternative">{{user.createdBy}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Created Date</label>
+                                    <label
+                                        class="form-control form-control-alternative">{{user.createdDate | date:'dd/MM/yy HH:mm' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Last Modified By</label>
+                                    <label class="form-control form-control-alternative">{{user.lastModifiedBy}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Last Modified Date</label>
+                                    <label
+                                        class="form-control form-control-alternative">{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Project Code</label>
+                                    <label class="form-control form-control-alternative">{{user.projectCode}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Reporting Manager Name</label>
+                                    <label
+                                        class="form-control form-control-alternative">{{user.reportingManagerName }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Reporting Manager Email</label>
+                                    <label class="form-control form-control-alternative">{{user.reportingManagerEmail}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Notification To</label>
+                                    <label
+                                        class="form-control form-control-alternative">{{user.notificationTo }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-control-label">Authority</label>
+                                    <div class="form-control form-control-alternative">
+                                        <span *ngFor="let authority of user.authorities">
+                                            <span class="badge badge-info">{{authority}}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

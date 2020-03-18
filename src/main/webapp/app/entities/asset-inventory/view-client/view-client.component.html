@@ -1,0 +1,46 @@
+<div class="container-fluid mt--9 mb-5">
+    <div class="row align-items-center">
+        <button class="btn btn-primary" [routerLink]="['/asset-reports']">Back</button>
+    </div>
+    <h2 class="text-center">UNASSIGNED ASSETS LIST</h2>
+    <div class="search">
+        <input class="form-control" type="search" [(ngModel)]="searchText" placeholder="Search by Serial No." />
+    </div>
+    <div class="table-responsive text-center">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <tr>
+                    <th [mdbTableSort]="listAllAssetReports" sortBy="assetType"><span>Asset Type</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th [mdbTableSort]="listAllAssetReports" sortBy="serialNumber"><span>Serial Number</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th [mdbTableSort]="listAllAssetReports" sortBy="modelNumber"><span>Model Number</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th [mdbTableSort]="listAllAssetReports" sortBy="manufacturer"><span>Manufacturer</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th [mdbTableSort]="listAllAssetReports" sortBy="procurementDate"><span>Procurement Date</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let asset of unassignedList | unassignedSerialFilter:searchText:['serialNumber'] | paginate: config ">
+                    <td>{{asset.assetType}}</td>
+                    <td>{{asset.serialNumber}}</td>
+                    <td>{{asset.modelNumber}}</td>
+                    <td>{{asset.manufacturer}}</td>
+                    <td>{{asset.procurementDate | date: "dd-MM-yyyy"}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+        <p class="text-center" *ngIf="(unassignedList | unassignedSerialFilter: searchText).length == 0">No matching records found
+        </p>
+        <pagination-controls class="text-center" (pageChange)="pageChanged($event)"></pagination-controls></div>
+    </div>
+</div>

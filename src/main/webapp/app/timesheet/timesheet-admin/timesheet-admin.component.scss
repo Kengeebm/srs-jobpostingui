@@ -1,0 +1,56 @@
+.mat-tab-group {
+  margin-bottom: 2px;
+}
+
+::ng-deep .mat-ink-bar {
+  background-color: var(--primary-color, #1f89ce) !important;
+  color: var(--primary-color, #1f89ce) !important;
+}
+
+table {
+  width: 100%;
+}
+
+.subBtn {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+}
+
+// .optBtn {
+//   width: 52px;
+// }
+.card-stats-timesheet {
+  background: #f5365c !important;
+}
+
+.card-stats-leave {
+  background: #ffd600 !important;
+}
+.card-stats-wfh {
+  background: #11cdef !important;
+}
+.card {
+  position: sticky;
+}
+
+.card-body {
+  padding: 1rem 1.5rem;
+  background: cadetblue;
+}
+
+@media only screen and (max-width: 414px) {
+  .mat-raised-button {
+    padding: 0px 3px;
+  }
+}
+@media screen and (max-width: 425px) {
+  table {
+    overflow: scroll;
+    position: relative;
+    display: grid;
+  }
+}
+.table {
+  display: flex !important;
+}

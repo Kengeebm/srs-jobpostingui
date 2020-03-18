@@ -1,0 +1,39 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+.logo-img {
+  height: 45px;
+  width: 45px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
+  background-size: contain;
+}
+
+.navbar-title {
+  color: white;
+}
+
+@media (max-width: 767.98px) {
+  .navbar-collapse.show {
+    margin-top: 40px !important;
+  }
+}
+
+h1 {
+  margin-left: 25px;
+  font-weight: bold;
+  color: white;
+}
+
+@media (max-width: 414px) {
+  h1 {
+    display: none !important;
+  }
+}
+
+@media (max-width: 320px) {
+  img {
+    width: 200px !important;
+  }
+}

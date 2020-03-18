@@ -1,0 +1,21 @@
+.ng-invalid:not(form) {
+  border-left: 1px solid #ced4da;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.star {
+  color: red;
+}
+.form-control.is-invalid {
+  background-image: none !important;
+}
+h2 {
+  font-weight: bold;
+  font-family: serif;
+}
+.card {
+  background-color: whitesmoke;
+}

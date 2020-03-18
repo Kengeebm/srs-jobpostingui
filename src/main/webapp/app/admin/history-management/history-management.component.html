@@ -1,0 +1,77 @@
+<div class="card mt--9 container" style="margin-bottom: 3rem;">
+    <div class="bck-btn col-sm-2">
+        <button class="btn btn-md btn-primary" [routerLink]="['/welcome']" id="back Button">Back</button>
+    </div>
+    <div class="text-center row">
+        <div class="col-12">
+            <h2><b>History</b></h2>
+        </div>
+    </div>
+    <mat-form-field appearance="outline">
+        <input class="search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+
+    <div class="mat-dialog-container">
+        <mat-table [dataSource]="dataSource" class="tableStyle table table-dark">
+
+            <!-- Employee Id Column -->
+            <ng-container matColumnDef="login">
+                <mat-header-cell *matHeaderCellDef> Employee Id</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.login}} </mat-cell>
+            </ng-container>
+
+            <!-- Leave Type Column -->
+            <ng-container matColumnDef="firstName">
+                <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+            </ng-container>
+
+            <!-- from date Column -->
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="visitPage">
+                <mat-header-cell *matHeaderCellDef> Visited Page</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.visitPage}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="loginTime">
+                <mat-header-cell *matHeaderCellDef> Access Time</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.loginTime}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="modifyContent">
+                <mat-header-cell *matHeaderCellDef> Content</mat-header-cell>
+                <mat-cell *matCellDef="let element"><a (click)="open(content)">click</a>
+                    <ng-template #content let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Content</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                    (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="width: fit-content; height: fit-content">
+                                {{element.modifyContent}}
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator [length]="20" [pageSize]="20" showFirstLastButtons>
+
+        </mat-paginator>
+    </div>
+</div>
+
+
+

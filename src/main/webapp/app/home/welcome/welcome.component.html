@@ -1,0 +1,136 @@
+<div class="container-fluid mt--9 pb-8 pt-5">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row profileBox">
+                <div class="col-xl-8 col-lg-12">
+                    <div class="card card-stats mb-4 mb-xl-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h3><strong><a [routerLink]="['/eipform']">PROFILE</a></strong></h3>
+                                    <strong><label>Name:</label></strong>&nbsp;{{currentAccount.firstName +' '+ currentAccount.lastName}}<br>
+                                    <strong><label>Email: </label></strong>&nbsp;{{currentAccount.email}}<br>
+                                    <p class="mt-2 mb-0 text-muted text-sm profileBox">
+                                        <button class="btn btn-primary" [routerLink]="['/eipform']">Profile
+                                            Page</button>
+                                    </p>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-pink text-white rounded-circle shadow">
+                                        <i class="fa fa-user" [routerLink]="['/eipform']"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-lg-6 div-cursor">
+                    <div class="card mb-4 mb-xl-2 p-3" (click)="timesheetMgtUrl('TIMESHEET MANAGEMENT')">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0"><a
+                                        (click)="timesheetMgtUrl('TIMESHEET MANAGEMENT')">TIMESHEET MANAGEMENT</a></h5>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                    <i class="fa fa-hdd-o" (click)="timesheetMgtUrl('TIMESHEET MANAGEMENT')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 div-cursor">
+                    <div class="card mb-4 mb-xl-2 p-3" (click)="leaveManagementUrl('LEAVE_MGT')">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0"><a
+                                        (click)="leaveManagementUrl('LEAVE_MGT')">LEAVE MANAGEMENT</a></h5>
+
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                    <i class="fa fa-hdd-o" (click)="leaveManagementUrl('LEAVE_MGT')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 div-cursor">
+                    <div class="card mb-4 mb-xl-2 p-3" *ngIf="isRecruiter" (click)="jobPostingUrl('JOB_POST')">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0"><a
+                                        (click)="jobPostingUrl('JOB_POST')">JOB POSTING</a></h5>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                    <i class="fa fa-hdd-o" (click)="jobPostingUrl('JOB_POST')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 div-cursor">
+                    <div class="card mb-4 mb-xl-2 p-3" *ngIf="isRecruiter" href="http://103.88.157.45:8083">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0"><a class="text-muted"
+                                        href="http://103.88.157.45:8083" target="_blank">RESUME RESPOSITORY</a></h5>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                    <i class="fa fa-hdd-o" href="http://103.88.157.45:8083" target="_blank"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 div-cursor">
+                    <div class="card mb-4 mb-xl-2 p-3" *ngIf="isRecruiter" href="http://103.88.157.45:8084">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0"><a class="text-muted"
+                                        href="http://103.88.157.45:8084" target="_blank">EDMS</a></h5>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                    <i class="fa fa-hdd-o"><a href="http://103.88.157.45:8084" target="_blank"></a></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 div-cursor">
+
+                    <div class="card mb-4 mb-xl-2 p-3">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-header">
+                                    <h5 class="card-title text-center text-uppercase text-muted mb-0">NOTIFICATION</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <marquee behavior="scroll" direction="up" scrollamount="3" onmouseover="this.stop();"
+                                onmouseleave="this.start();">
+                                <div class="card-text">
+                                    <p *ngFor="let notify of notificationList"><img src="../../../assets/animation_new.gif" />
+                                    {{notify.message}} &nbsp;<span style="font-weight: bold;">{{notify.publishedDate}}</span>
+                                    </p>
+                                </div>
+                            </marquee>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="marquee">
+        <marquee>If you encounter any issues, click on Account >> Contact Admin and submit your query.</marquee>
+    </div>
+</div>

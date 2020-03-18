@@ -1,0 +1,67 @@
+<div class="card mt--9 container">
+    <div class="bck-btn col-sm-2">
+        <button class="btn btn-md btn-primary" [routerLink]="['/request']" id="back Button">Back</button>
+    </div>
+    <div class="text-center row">
+        <div class="col-12">
+            <h2><b>Request History</b></h2>
+        </div>
+    </div>
+    <mat-form-field appearance="outline">
+        <input class="search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+
+    <div class="mat-dialog-container">
+        <mat-table [dataSource]="dataSource" class="tableStyle">
+
+            <!-- Employee Id Column -->
+            <ng-container matColumnDef="empId">
+                <mat-header-cell *matHeaderCellDef> Employee Id</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.empId}} </mat-cell>
+            </ng-container>
+
+            <!-- Leave Type Column -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <!-- from date Column -->
+            <ng-container matColumnDef="message">
+                <mat-header-cell *matHeaderCellDef> Message</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.message}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fileName">
+                <mat-header-cell *matHeaderCellDef> File Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.fileName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="attachment">
+                <mat-header-cell *matHeaderCellDef> Click</mat-header-cell>
+                <mat-cell *matCellDef="let element"><a (click)="open(content)">click</a>
+                    <ng-template #content let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Content</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                    (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="width: fit-content; height: fit-content">
+                                <img [src]="element.attachment">
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator [length]="20" [pageSize]="20" showFirstLastButtons>
+
+        </mat-paginator>
+    </div>
+</div>

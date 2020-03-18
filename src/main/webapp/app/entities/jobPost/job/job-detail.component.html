@@ -1,0 +1,297 @@
+<div class="container-fluid mt--9">
+  <div class="row justify-content-center">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+              <div class="col-5">
+                  <button class="btn btn-primary" (click)="previousState()">
+                      <!-- <fa-icon [icon]="'arrow-left'"></fa-icon> -->
+                      Back
+                  </button>
+                  <button [routerLink]="['/job', job.id, 'edit']" class="btn btn-primary">
+                      <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+                  </button>
+              </div>
+            <div class="col-7">
+              <h3 class="mb-0">Job Information</h3>
+            </div>
+
+          </div>
+        </div>
+        <div class="card-body">
+            <h6 class="heading-small text-muted mb-4">JOB ID : {{job.jobId}}</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-4">
+                    <label class="label">Client Name :</label><br>
+                    <label class="form-control-label">{{job.clientName}}</label>
+                  </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                          <label class="label">No Of Position :</label><br>
+                          <label class="form-control-label">{{job.noOfPosition}}</label>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                          <label class="label">Position Name :</label><br>
+                          <label class="form-control-label">{{job.positionName}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                      <label class="label">Location :</label><br>
+                      <label class="form-control-label">{{job.location}}</label>
+                   </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                          <label class="label">Exp Required :</label><br>
+                          <label class="form-control-label">{{job.fromExp+" to "+job.toExp}}</label>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                          <label class="label">Filled Position :</label><br>
+                          <label class="form-control-label">{{job.filledPosition}}</label>
+                       </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-4">
+                      <div class="form-group">
+                          <label class="label">Opened Date :</label><br>
+                          <label class="form-control-label">{{job.startDate}}</label>
+                  </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                          <label class="label">Valid Till :</label><br>
+                          <label class="form-control-label">{{job.endDate}}</label>
+                       </div>
+                </div>
+              
+                <div class="col-lg-4">
+                      <div class="form-group">
+                          <label class="label">Closed On :</label><br>
+                          <label class="form-control-label">{{job.closedOn}}</label>
+                  </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-4">
+                          <div class="form-group">
+                              <label class="label">Opened By :</label><br>
+                              <label class="form-control-label">{{job.openedBy}}</label>
+                           </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                              <label class="label">Closed By :</label><br>
+                              <label class="form-control-label">{{job.closedBy}}</label>
+                      </div>
+                    </div>
+                        <div class="col-lg-4">  </div>
+                   </div>
+                   <div class="form-group">
+                      <label class="label">Job Description</label><br>
+                      <label class="form-control-label">{{job.jobDesc}}</label>
+              </div>
+              <div class="form-group">
+                  <label class="label">Comments</label><br>
+                  <label class="form-control-label">{{job.comments}}</label>
+          </div>
+      </div>
+      <div class="justify-content-center text-center"> <button type="submit" (click)="previousState()" class="btn btn-primary ">&nbsp;<span>Close Job</span></button></div>
+    </div>
+        </div>
+      </div>
+      <div class="col-xl-4 order-xl-1">
+        <div class="card bg-secondary shadow justify-content-center spacealign">
+          <div class="card-header bg-white border-0">
+              <div class="row justify-content-center">
+                    <h3 class="mb-0">Suggestions</h3>
+                  </div>
+          </div>
+              <div class="card-body">
+                  <div class="justify-content-center text-center"> <h5 class="mb-0 justify-content-center">source: IM</h5></div>
+                  <table class="table tableStyle table-responsive align-items-center table-flush text-center">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Total Exp</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="candidateRow" *ngFor = 'let candidate of candidates' data-toggle="modal" data-target="#candidateView" (click)="selectRow(candidateTemplate, candidate)">
+                          <th scope="row">
+                              {{candidate.name}}
+                          </th>
+                          <td>
+                            {{candidate.experience}}
+                          </td>
+                        </tr>
+                      </tbody>
+                   </table>
+            </div>
+             <!-- Candidate Modal -->
+             <div class="popUp">
+              <ng-template #candidateTemplate class="modal fade mt-12 pt-12" >
+                      <div class="modal-header">
+                          <h4 class="modal-title modal-header justify-content-center">Candidate Details</h4>
+                        <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="row" >
+                              <div class="col-lg-4">
+                                  <label class="label">Candidate Name :</label><br>
+                                  <label class="form-control-label">{{candidateRow.name}}</label>
+                                </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                        <label class="label">Email :</label><br>
+                                        <label class="form-control-label">{{candidateRow.email}}</label>
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                        <label class="label">Phone :</label><br>
+                                        <label class="form-control-label">{{candidateRow.phoneNo}}</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-lg-4">
+                                    <label class="label">Current Company :</label><br>
+                                    <label class="form-control-label">{{candidateRow.currentCompany}}</label>
+                                  </div>
+                                <div class="col-lg-4">
+                                  <div class="form-group">
+                                          <label class="label">Experience :</label><br>
+                                          <label class="form-control-label">{{candidateRow.experience}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-lg-4">
+                                  <div class="form-group">
+                                          <label class="label">Position :</label><br>
+                                          <label class="form-control-label">{{candidateRow.position}}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row" >
+                                  <div class="col-lg-4">
+                                      <label class="label">Gender :</label><br>
+                                      <label class="form-control-label">{{candidateRow.gender}}</label>
+                                    </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label class="label">City :</label><br>
+                                            <label class="form-control-label">{{candidateRow.cit}}</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label class="label">State :</label><br>
+                                            <label class="form-control-label">{{candidateRow.state}}</label>
+                                    </div>
+                                  </div>
+                                </div>
+                      </div>
+                      <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Close</button>
+                      </div>
+                </ng-template>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- <div class="row justify-content-center">
+  <div class="col-8">
+      <div *ngIf="job">
+          <h2><span>Job</span> {{job.id}}</h2>
+          <hr>
+          <jhi-alert-error></jhi-alert-error>
+          <dl class="row-md jh-entity-details">
+              <dt><span>Job Id</span></dt>
+              <dd>
+                  <span>{{job.jobId}}</span>
+              </dd>
+              <dt><span>Client Name</span></dt>
+              <dd>
+                  <span>{{job.clientName}}</span>
+              </dd>
+              <dt><span>No Of Position</span></dt>
+              <dd>
+                  <span>{{job.noOfPosition}}</span>
+              </dd>
+              <dt><span>Position Name</span></dt>
+              <dd>
+                  <span>{{job.positionName}}</span>
+              </dd>
+              <dt><span>Location</span></dt>
+              <dd>
+                  <span>{{job.location}}</span>
+              </dd>
+              <dt><span>Job Desc</span></dt>
+              <dd>
+                  <span>{{job.jobDesc}}</span>
+              </dd>
+              <dt><span>From Exp Req</span></dt>
+              <dd>
+                  <span>{{job.fromExp}}</span>
+              </dd>
+              <dt><span>To Exp Req</span></dt>
+              <dd>
+                  <span>{{job.toExp}}</span>
+              </dd>
+
+              <dt><span>Filled Position</span></dt>
+              <dd>
+                  <span>{{job.filledPosition}}</span>
+              </dd>
+              <dt><span>Comments</span></dt>
+              <dd>
+                  <span>{{job.comments}}</span>
+              </dd>
+              <dt><span>Start Date</span></dt>
+              <dd>
+                  <span>{{job.startDate}}</span>
+              </dd>
+              <dt><span>End Date</span></dt>
+              <dd>
+                  <span>{{job.endDate}}</span>
+              </dd>
+              <dt><span>Closed On</span></dt>
+              <dd>
+                  <span>{{job.closedOn}}</span>
+              </dd>
+              <dt><span>Opened By</span></dt>
+              <dd>
+                  <span>{{job.openedBy}}</span>
+              </dd>
+              <dt><span>Closed By</span></dt>
+              <dd>
+                  <span>{{job.closedBy}}</span>
+              </dd>
+          </dl>
+
+          <button type="submit"
+                  (click)="previousState()"
+                  class="btn btn-info">
+              <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+          </button>
+
+          <button type="button"
+                  [routerLink]="['/job', job.id, 'edit']"
+                  class="btn btn-primary">
+              <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+          </button>
+      </div>
+  </div>
+</div> -->

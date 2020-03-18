@@ -1,0 +1,121 @@
+<div class="container-fluid mt--9 mb-5 border-0">
+    <div class="card">
+        <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+                <button class="btn btn-primary" [routerLink]="['/asset-dashboard']">Back</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card row">
+                <div class="col-md-6 offset-md-3" *ngFor="let addAsset of addAssetList">
+                    <form name="editForm" role="form" (ngSubmit)="f.form.valid && save(f)" #f="ngForm">
+                        <h2 class="text-center">ADD / EDIT ASSET DETAILS</h2>
+                        <div class="form-group"  [hidden]="!addAsset.id">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   [(ngModel)]="addAsset.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Asset Type</label><span
+                            class="star"> *</span>
+                            <select name="assetType" class="form-control" [(ngModel)]="addAsset.assetType"
+                                #assetType="ngModel" [ngClass]="{ 'is-invalid': f.submitted && assetType.invalid }"
+                                required>
+                                <option *ngFor="let types of assetLists" [value]='types.assetName'>
+                                    {{types.assetName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.submitted && assetType.invalid" class="invalid-feedback">
+                                <div *ngIf="assetType.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="serialNumber">Serial Number</label><span
+                            class="star"> *</span>
+                            <input type="text" class="form-control" name="serialNumber"
+                                [(ngModel)]="addAsset.serialNumber" #serialNumber="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && serialNumber.invalid }"
+                                pattern='[a-zA-Z0-9-]+' maxlength="30" required />
+                            <div *ngIf="f.submitted && serialNumber.invalid" class="invalid-feedback">
+                                <div *ngIf="serialNumber.errors.required">This field is required</div>
+                                <div *ngIf="serialNumber.errors.pattern">Serial no. shouldn't contain special character
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="modelNumber">Model Number</label><span
+                            class="star"> *</span>
+                            <input type="text" class="form-control" name="modelNumber"
+                                [(ngModel)]="addAsset.modelNumber" #modelNumber="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && modelNumber.invalid }" required />
+                            <div *ngIf="f.submitted && modelNumber.invalid" class="invalid-feedback">
+                                <div *ngIf="modelNumber.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="manufacturer">Manufacturer</label><span
+                            class="star"> *</span>
+                            <select name="manufacturer" class="form-control" [(ngModel)]="addAsset.manufacturer"
+                                #manufacturer="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && manufacturer.invalid }" required>
+                                <option *ngFor="let names of manufacturerList" [value]='names.manufacturerName'>
+                                    {{names.manufacturerName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.submitted && manufacturer.invalid" class="invalid-feedback">
+                                <div *ngIf="manufacturer.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="procurementDate">Procurement Date</label><span
+                            class="star"> *</span>
+                            <input type="date" class="form-control" name="procurementDate"
+                                [(ngModel)]="addAsset.procurementDate" #procurementDate="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && procurementDate.invalid }" required />
+                            <div *ngIf="f.submitted && procurementDate.invalid" class="invalid-feedback">
+                                <div *ngIf="procurementDate.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="clientName">Asset Owned By</label><span
+                            class="star"> *</span>
+                            <select name="clientName" class="form-control" [(ngModel)]="addAsset.clientName"
+                                #clientName="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && clientName.invalid }" required>
+                                <option *ngFor="let names of clientList" [value]='names.clientName'>
+                                    {{names.clientName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.submitted && clientName.invalid" class="invalid-feedback">
+                                <div *ngIf="clientName.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="locationName">Location</label><span
+                            class="star"> *</span>
+                            <select name="locationName" class="form-control" [(ngModel)]="addAsset.locationName"
+                                #location="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && location.invalid }" required>
+                                <option *ngFor="let names of locationList" [value]='names.locationName'>
+                                    {{names.locationName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.submitted && location.invalid" class="invalid-feedback">
+                                <div *ngIf="locationName.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" id="save-entity" class="btn btn-primary">
+                                Save
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="reset(f)">
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

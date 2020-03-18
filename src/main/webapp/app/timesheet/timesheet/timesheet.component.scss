@@ -1,0 +1,208 @@
+@media only screen and (max-width: 768px) {
+  .ts-btn {
+    width: 145px;
+  }
+  .dates {
+    width: 50% !important;
+  }
+
+  label {
+    margin-bottom: 0 !important;
+    margin: 0 0 0 0.625px !important;
+    color: black !important;
+  }
+
+  .cal {
+    margin-right: 0px;
+  }
+
+  .detail {
+    width: 100%;
+  }
+
+  .coming-holiday {
+    margin-left: 0rem !important;
+  }
+}
+
+.btn {
+  margin: 5px;
+}
+
+.dates {
+  width: 12.3%;
+}
+
+.detail {
+  width: 100%;
+}
+
+.present {
+  background-color: #90f587;
+}
+
+.wfh {
+  background-color: #d2facf;
+}
+
+.wcl {
+  background-color: #d2facf;
+}
+
+.co {
+  background-color: #ffcfb3;
+}
+
+.holiday {
+  background-color: #ffc09c;
+}
+
+.absent {
+  background-color: red;
+  color: white;
+}
+
+.cal {
+  margin-right: 0px;
+}
+
+.btn-can {
+  margin-right: 7%;
+}
+
+.titleHead {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  justify-content: center;
+}
+.backBtn {
+  margin-top: 8px;
+}
+.btmbtn {
+  text-align: center !important;
+  display: flex;
+  justify-content: center;
+}
+.upBtn {
+  display: flex;
+  justify-content: flex-start;
+  width: auto;
+}
+.btn {
+  font-size: 0.675rem !important;
+  padding: 0.425rem 0.45rem !important;
+}
+.card-header {
+  padding: 0.35rem 1.5rem;
+}
+.card-footer {
+  padding: 0.35rem 1.5rem;
+}
+
+.footerBtn {
+  padding: 0.525rem 1.25rem !important;
+}
+.modal-side modal-bottom-right modal-notify {
+  height: 200px;
+  width: 50px;
+}
+.modal-header {
+  padding: 1.25rem;
+}
+.modal-body[_ngcontent-bmj-c1] {
+  position: relative;
+  padding: 0.5rem;
+  flex: 1 1 auto;
+}
+.modal-footer[_ngcontent-idg-c1] {
+  padding-top: initial;
+  margin: auto;
+}
+
+.topRytBtn {
+  float: right;
+}
+.public-holiday {
+  overflow-y: scroll;
+  height: 400px;
+  font-size: 13px;
+}
+.public-hday {
+  text-align: left;
+  padding-left: 2px;
+}
+.public-hdate {
+  text-align: right;
+  padding-right: 2px;
+}
+
+.modal-content2 {
+  width: 500px !important;
+  height: 250px !important;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.popup-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.rytTopData {
+  float: right;
+  text-align: start;
+}
+.modal-body {
+  height: auto !important;
+}
+.alert {
+  font-size: 0.875rem !important;
+  position: relative !important;
+  transition: all 0.15s ease !important;
+  letter-spacing: 0.025em !important;
+  text-transform: none !important;
+  will-change: transform !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  display: inline-block !important;
+  padding: 0.625rem 1.25rem !important;
+}
+
+.holiday-list strong {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+}
+
+.table thead th {
+  font-size: 15px !important;
+}
+
+.table td {
+  font-size: 15px !important;
+}
+
+.legend {
+  font-size: 15px !important;
+  margin-top: 80px;
+}
+
+.legend b {
+  font-weight: 600 !important;
+}
+
+.timesheet-header {
+  font-size: 15px !important;
+}
+
+input,
+button,
+select,
+optgroup,
+textarea {
+  font-size: 13px !important;
+}
+
+.card-footer {
+  border: none;
+}

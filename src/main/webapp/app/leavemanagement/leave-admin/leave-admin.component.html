@@ -1,0 +1,632 @@
+<div class="container-fluid mt--9 mb-5">
+    <button class="btn btn-primary backBtn topBtn mt--4" color="primary" (click)="onBackButtonEvent()"
+        [disabled]='disableBack'>
+        Back
+    </button>
+    <div class="card">
+        <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+            <mat-tab label="WFH Submitted List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-name">
+                            <mat-form-field>
+                                <input matInput (keyup)="nameByFilterWFHPending($event.target.value)"
+                                    placeholder="Search by Employee Name">
+                            </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="leaveWFHPendingDataSource" class="mat-elevation-z8"
+                            #sort1="matSort" matSort>
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggleWFHPending() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leaveType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type</th>
+                                <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fromDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="toDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submit Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submit Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found
+                        </div>
+                        <mat-paginator #paginator1="matPaginator" [pageSizeOptions]="[10, 30, 50, numRows]"
+                            showFirstLastButtons></mat-paginator>
+                        <div class="card">
+                            <div class="row subBtn">
+                                <div class="class optBtn">
+                                    <mat-form-field>
+                                        <mat-label>Choose an action</mat-label>
+                                        <mat-select [(ngModel)]="selectedOption" [disabled]='WFHPendingDataNotExist'>
+                                            <mat-option value="Approved">Approve</mat-option>
+                                            <mat-option value="Reject">Reject</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <button [disabled]='WFHPendingDataNotExist' color="primary" mat-raised-button
+                                        (click)="submitWFH()">Submit
+                                    </button>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="WFH Approved List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-class">
+                            <mat-form-field>
+                                <input matInput readonly [matDatepicker]="dpWFHApproved"
+                                    placeholder="Search - Month and Year" [(ngModel)]="startDateWFHApproved"
+                                    (dateInput)="applyFilterWFHApproved($event.target.value)"
+                                    (keyup)="applyFilterWFHApproved($event.target.value)">
+                                <mat-datepicker-toggle matSuffix [for]="dpWFHApproved"></mat-datepicker-toggle>
+                                <mat-datepicker #dpWFHApproved startView="multi-year" [startAt]="startDateWFHApproved"
+                                    (monthSelected)="chosenMonthHandlerWFHApproved($event, dpWFHApproved)">
+                                </mat-datepicker>
+                            </mat-form-field>
+                                    <mat-form-field style="float: right;">
+                                        <input matInput (keyup)="nameByFilterWFHApprovedList($event.target.value)"
+                                            placeholder="Search by Employee Name">
+                                    </mat-form-field>
+                            
+                        </div>
+                        <table mat-table [dataSource]="leaveWFHApprovedDataSource" class="mat-elevation-z8"
+                            #sort2="matSort" matSort>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leaveType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type</th>
+                                <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fromDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="toDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedBy">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved By</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedBy}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+                        <mat-paginator #paginator2="matPaginator" [pageSizeOptions]="[10, 30, 50, numRows]"
+                            showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Leave Submitted List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-name">
+                            <mat-form-field>
+                                <input matInput (keyup)="nameByFilterLeavePending($event.target.value)"
+                                    placeholder="Search by Employee Name">
+                            </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="leavePendingDataSource" class="mat-elevation-z8" #sort3="matSort"
+                            matSort>
+
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggleLeavePending() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leaveType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type</th>
+                                <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fromDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="toDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submit Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submit Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found
+                        </div>
+                        <mat-paginator #paginator3="matPaginator" [pageSizeOptions]="[10, 30, 50, numRows]"
+                            showFirstLastButtons></mat-paginator>
+                        <div class="card">
+                            <div class="row subBtn">
+                                <div class="class optBtn">
+                                    <mat-form-field>
+                                        <mat-label>Choose an action</mat-label>
+                                        <mat-select [(ngModel)]="selectedOption" [disabled]='leavePendingDataNotExist'>
+                                            <mat-option value="Approved">Approve</mat-option>
+                                            <mat-option value="Reject">Reject</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <button [disabled]='leavePendingDataNotExist' color="primary" mat-raised-button
+                                        (click)="submitleave()">Submit
+                                    </button>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Leave Approved List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-class">
+                            <mat-form-field>
+                                <input matInput readonly [matDatepicker]="dpLeaveApproved"
+                                    placeholder="Search - Month and Year" [(ngModel)]="startDateLeaveApproved"
+                                    (dateInput)="applyFilterLeaveApproved($event.target.value)"
+                                    (keyup)="applyFilterLeaveApproved($event.target.value)">
+                                <mat-datepicker-toggle matSuffix [for]="dpLeaveApproved"></mat-datepicker-toggle>
+                                <mat-datepicker #dpLeaveApproved startView="multi-year"
+                                    [startAt]="startDateLeaveApproved"
+                                    (monthSelected)="chosenMonthHandlerLeaveApproved($event, dpLeaveApproved)">
+                                </mat-datepicker>
+                            </mat-form-field>
+                                <mat-form-field style="float: right;">
+                                    <input matInput (keyup)="nameByFilterLeaveApprovedList($event.target.value)"
+                                        placeholder="Search by Employee Name">
+                                </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="leaveApprovedDataSource" class="mat-elevation-z8"
+                            #sort4="matSort" matSort>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leaveType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type</th>
+                                <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fromDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="toDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedBy">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved By</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedBy}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+                        <mat-paginator #paginator4="matPaginator" [pageSizeOptions]="[10, 30, 50, numRows]"
+                            showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="WCL/CO Submitted List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-name">
+                            <mat-form-field>
+                                <input matInput (keyup)="nameByFilterWCLCOPending($event.target.value)"
+                                    placeholder="Search by Employee Name">
+                            </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="WCLCOPendingDataSource" class="mat-elevation-z8" #sort5="matSort"
+                            matSort>
+
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggleWCLCOPending() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leaveType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type</th>
+                                <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fromDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="toDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submit Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="submitTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submit Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.submitTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found
+                        </div>
+                        <mat-paginator #paginator5="matPaginator" [pageSizeOptions]="[10, 30, 50, numRows]"
+                            showFirstLastButtons></mat-paginator>
+                        <div class="card">
+                            <div class="row subBtn">
+                                <div class="class optBtn">
+                                    <mat-form-field>
+                                        <mat-label>Choose an action</mat-label>
+                                        <mat-select [(ngModel)]="selectedOption" [disabled]='WCLCOPendingDataNotExist'>
+                                            <mat-option value="Approved">Approve</mat-option>
+                                            <mat-option value="Reject">Reject</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <button [disabled]='WCLCOPendingDataNotExist' color="primary" mat-raised-button
+                                        (click)="submitWCLCO()">Submit
+                                    </button>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="WCL/CO Approved List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-class">
+                            <mat-form-field>
+                                <input matInput readonly [matDatepicker]="dpWCLCOApproved"
+                                    placeholder="Search - Month and Year" [(ngModel)]="startDateWCLCOApproved"
+                                    (dateInput)="applyFilterWCLCOApproved($event.target.value)"
+                                    (keyup)="applyFilterWCLCOApproved($event.target.value)">
+                                <mat-datepicker-toggle matSuffix [for]="dpWCLCOApproved"></mat-datepicker-toggle>
+                                <mat-datepicker #dpWCLCOApproved startView="multi-year"
+                                    [startAt]="startDateWCLCOApproved"
+                                    (monthSelected)="chosenMonthHandlerWCLCOApproved($event, dpWCLCOApproved)">
+                                </mat-datepicker>
+                            </mat-form-field>
+                                <mat-form-field style="float: right;">
+                                    <input matInput (keyup)="nameByFilterWLCApprovedList($event.target.value)"
+                                        placeholder="Search by Employee Name">
+                                </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="WCLCOApprovedDataSource" class="mat-elevation-z8"
+                            #sort6="matSort" matSort>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leaveType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type</th>
+                                <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fromDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="toDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedBy">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved By</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedBy}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Approved Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+                        <mat-paginator #paginator6="matPaginator" [pageSizeOptions]="[10, 30, 50, numRows]"
+                            showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Rejected List">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="input-class">
+                            <mat-form-field>
+                                <input matInput readonly [matDatepicker]="dpRejected"
+                                    placeholder="Search - Month and Year" [(ngModel)]="startDateRejected"
+                                    (dateInput)="applyFilterRejected($event.target.value)"
+                                    (keyup)="applyFilterRejected($event.target.value)">
+                                <mat-datepicker-toggle matSuffix [for]="dpRejected"></mat-datepicker-toggle>
+                                <mat-datepicker #dpRejected startView="multi-year" [startAt]="startDateApproved"
+                                    (monthSelected)="chosenMonthHandlerRejected($event, dpRejected)"></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field style="float: right;">
+                                <input matInput (keyup)="nameByFilterRejectedList($event.target.value)"
+                                    placeholder="Search by Employee Name">
+                            </mat-form-field>
+                        </div>
+                        <table mat-table [dataSource]="leaveRejectedDataSource" class="mat-elevation-z8"
+                            #sort7="matSort" matSort>
+
+                            <ng-container matColumnDef="employeeId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="empName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leaveType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type</th>
+                                <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fromDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="toDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                                <td mat-cell *matCellDef="let element">{{element.status}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedBy">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rejected By</th>
+                                <td mat-cell *matCellDef="let element">{{element.approvedBy}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rejected Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedDate}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approvedTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rejected Time</th>
+                                <td mat-cell *matCellDef="let element"> {{element.approvedTime}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                        </table>
+                        <div *ngIf="noData" class="no-records">
+                            No records found for selected month
+                        </div>
+                        <mat-paginator #paginator7="matPaginator" [pageSizeOptions]="[10, 30, 50, numRows]"
+                            showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

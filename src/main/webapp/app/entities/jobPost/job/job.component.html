@@ -1,0 +1,237 @@
+
+
+<!-- search box-->
+<div class="container-fluid">
+    <div class="justify-content-center">
+            <div class="col-lg-12 col-md-12">
+                <div class="box bg-secondary shadow border-0 mt--9">
+                    <div class="card-header bg-transparent">
+                        <div class="row align-items-center">
+                                <div class="col-sm-3 text-left mb-2 mt--3">
+                                        <button class="btn btn-primary" (click)="prevPage()">Back</button>
+                                        <button class="btn btn-primary" routerLink="/job-history" routerLinkActive="active" >Job History</button>
+                                    </div>
+                            <div class="col-sm-9 titleCenter">
+                                <h2 class="mb-0">Search</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-4 col-md-6 form-group">
+                                <label class="form-control-label" for="field_clientName">Client Name</label> 
+                                    <select id="field_clientName" class="form-control" name="clientName" [(ngModel)]="clientName">
+                                       <option *ngFor="let client of clientNameList" value="{{client.name}}">{{client.name}}</option>
+                                    </select>
+                                <div class="icons">
+                                    <span class="fa fa-search" (click)="searchClientName()"></span>
+                                    <span class="fa fa-refresh" (click)="clearClientName()"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 form-group">
+                                <label class="form-control-label" for="field_location">Location</label>
+                                <select class="form-control" id="field_location" [(ngModel)]="locationName"
+                                        name="location">
+                                    <option *ngFor="let location of locationList"
+                                            value="{{location.name}}">{{location.name}}</option>
+                                </select>
+                                <div class="icons">
+                                <span class="fa fa-search" (click)="searchLocationName()"></span>
+                                <span class="fa fa-refresh" (click)="clearLocationName()"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 form-group">
+                                <label class="form-control-label" for="field_Position">Position</label>
+                                <select id="field_Position"
+                                        class="form-control" name="position" [(ngModel)]="jobPositionName"
+                                >
+                                    <option *ngFor="let position of positionList"
+                                            value="{{position.name}}">{{position.name}}</option>
+                                </select>
+                                <div class="icons">
+                                <span class="fa fa-search" (click)="searchJobPositionName()"></span>
+                                <span class="fa fa-refresh" (click)="clearJobPositionName()"></span>
+                            </div>
+                            </div>
+                          <!--  <div class="col-lg-2 col-md-6 form-group">
+
+                                <label class="form-control-label" for="field_startDate">Start Date:</label>
+                                <div class="input-group">
+                                    <input id="field_startDate" type="text" class="form-control"
+                                           name="startDate" ngbDatepicker #startDateDp="ngbDatepicker"
+                                    /> <span
+                                    class="input-group-append">
+                                        <button type="button" class="btn btn-primary"
+                                                (click)="startDateDp.toggle()">
+                                            <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 form-group">
+                                <label class="form-control-label" for="field_endDate">End Date:</label>
+                                <div class="input-group">
+                                    <input id="field_endDate" type="text" class="form-control"
+                                           name="endDate" ngbDatepicker #endDateDp="ngbDatepicker"
+                                    /> <span
+                                    class="input-group-append">
+                                        <button type="button" class="btn btn-primary"
+                                                (click)="endDateDp.toggle()">
+                                            <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 form-group align-items-center">
+                                <div class="row justify-content-center">
+                                    <button type="button" class="btn btn-primary" (click)="sendResult()">Submit</button>
+                                </div>
+                            </div>-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- search box-->
+
+<!-- Body-->
+<div class="container-fluid pb-5 mt-3">
+    <div class="block-body row justify-content-center">
+        <div class="col-lg-12 col-md-12">
+            <div class="box bg-secondary shadow border-0">
+                <div class="card-body px-lg-2 py-lg-2">
+                    <div>
+                        <h2 id="page-heading" class="text-center">
+                            <span>JOBS</span>
+                            <button id="jh-create-entity"
+                                    class="btn btn-primary float-right jh-create-entity create-job"
+                                    [routerLink]="['/job/new']">
+                                <fa-icon [icon]="'plus'"></fa-icon>
+                                <span>
+                                    Create new Job
+                                    </span>
+                            </button>
+                        </h2>
+                        <jhi-alert></jhi-alert>
+                        <br/>
+                        <div class="alert alert-warning" *ngIf="jobs?.length === 0">
+                            <span>No jobs found</span>
+                        </div>
+                        <div class="table-responsive text-center" *ngIf="jobs?.length > 0">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"
+                                    [callback]="transition.bind(this)">
+                                    <th jhiSortBy="id" hidden><span>ID</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="jobId"><span>Job Id</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="clientName"><span>Client Name</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="noOfPosition"><span>No Of Position</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="positionName"><span>Position Name</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="location"><span>Location</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <!-- <th jhiSortBy="jobDesc"><span>Job Desc</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
+                                   
+                                    <!-- <th jhiSortBy="expReq"><span>Exp Req</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th> -->
+                                    <!-- <th jhiSortBy="filledPosition"><span>Filled Position</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th> -->
+
+                                    <!-- <th jhiSortBy="comments"><span>Comments</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
+                                    <th jhiSortBy="startDate"><span>Start Date</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="endDate"><span>End Date</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <!-- <th jhiSortBy="closedOn"><span>Closed On</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="openedBy"><span>Opened By</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="closedBy"><span>Closed By</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th> -->
+                                    <th jhiSortBy="assignee"><span>Assignee</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th><span>Action</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let job of jobs ;trackBy: trackId">
+                                    <td hidden><a [routerLink]="['/job', job.id, 'view' ]">{{job.id}}</a></td>
+                                    <td>{{job.jobId != null ? job.jobId : '-'}}</td>
+                                    <td>{{job.clientName != null ? job.clientName : '-'}}</td>
+                                    <td>{{job.noOfPosition != null ? job.noOfPosition : '-'}}</td>
+                                    <td>{{job.positionName != null ? job.positionName : '-'}}</td>
+                                    <td>{{job.location != null ? job.location : '-'}}</td>
+                                    <!-- <td>{{job.jobDesc}}</td> -->
+
+                                    <!-- <td>{{job.fromExp != null ? job.fromExp : '-'}}</td>
+                                    <td>{{job.filledPosition != null ? job.filledPosition : '-'}}</td> -->
+
+                                    <!-- <titemsPerPaged>{{job.comments}}</td> -->
+                                    <td>{{job.startDate != null ? (job.startDate | date:'mediumDate') : '-' }}</td>
+                                    <td>{{job.endDate != null ? (job.endDate | date:'mediumDate') : '-' }}</td>
+                                    <!-- <td>{{job.closedOn != null ? (job.closedOn | date:'mediumDate') : '-' }}</td>
+                                    <td>{{job.openedBy != null ? job.openedBy : '-'}}</td>
+                                    <td>{{job.closedBy != null ? job.closedBy : '-'}}</td> -->
+                                    <td>{{job.assignee != null ? job.assignee : '-'}}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group">
+                                            <button type="submit"
+                                                    [routerLink]="['/job', job.id, 'view' ]"
+                                                    class="btn btn-info btn-sm">
+                                                <fa-icon [icon]="'eye'"></fa-icon>
+                                                <span class="d-none d-md-inline">View</span>
+                                            </button>
+                                            <button type="submit"
+                                                    [routerLink]="['/job', job.id, 'edit']"
+                                                    class="btn btn-primary btn-sm">
+                                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                <span class="d-none d-md-inline">Edit</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div [hidden]="jobs?.length === 0">
+                            <div class="row justify-content-center">
+                                <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="itemsPerPage"
+                                                [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                            </div>
+                            <div class="row justify-content-center number">
+                                <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+                                                [pageSize]="itemsPerPage" [maxSize]="itemsPerPage" [rotate]="true"
+                                                [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

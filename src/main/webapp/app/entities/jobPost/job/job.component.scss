@@ -1,0 +1,32 @@
+@media (min-width: 1200px) {
+  .block {
+    max-width: 1250px;
+  }
+}
+
+.box {
+  border-radius: 10px;
+  padding: 3px;
+}
+
+#field_jobDesc,
+#field_jobDesc {
+  resize: none !important;
+}
+
+.icons {
+  float: right;
+  cursor: pointer;
+  font-size: 21px;
+}
+.fa-search {
+  padding-right: 10px;
+}
+
+.titleCenter {
+  text-align: center;
+}
+
+.number {
+  position: sticky;
+}

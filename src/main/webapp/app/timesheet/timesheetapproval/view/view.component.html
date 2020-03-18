@@ -1,0 +1,116 @@
+<div class="container mt--9 pb-8 pt-1" class="container-style">
+        <div class="card">
+                <div class ="card-header">
+                 <div class="row"> 
+                <div class="col-xs-12 col-sm-3 col-md-co3l-lg-4 bck-btn" class="resp-class">
+                    <button class="btn btn-md btn-primary" [routerLink]="['/timesheet']" id="back Button">BACK</button>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <div class="">
+                        <h1>TimeSheet Approval Record View</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+        <div id="exTab1" class="container">	
+                <ul  class="nav nav-pills">
+                            <li class="active btn border border-primary">
+                        <a  href="#1a" data-toggle="tab">Your Requests</a>
+                            </li>
+                            <li class="btn border border-primary"><a href="#2a" data-toggle="tab">Requests to be Approve</a>
+                            </li>
+                        </ul>
+                
+                            <div class="tab-content clearfix">
+                              <div class="tab-pane active" id="1a">
+                                    <div class="table-responsive">
+                                            <table id="Datatable" class="display nowrap table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <!-- <th>Id</th> -->
+                                                        <th>Applied Date</th>
+                                                        <th>Start and End Date</th>
+                                                        <th>Manager Name</th>
+                                                        <th>Description</th>
+                                                        <th>UserName</th>
+                                                        <th>Approval</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let timeSheetApproval of timeSheetApprovals">
+                                                        <!-- <td>1</td> -->
+                                                        <td>{{timeSheetApproval.currentDate }}</td>
+                                                        <td>{{timeSheetApproval.fromDate | date:'MMM, dd'}}-to-{{timeSheetApproval.toDate | date:'MMM, dd yyyy'}}</td>
+                                                        <td>{{timeSheetApproval.managerName}}</td>  
+                                                        <td data-toggle="tooltip"
+                                                            title='{{timeSheetApproval.description}}'>
+                                                            {{timeSheetApproval.description}}
+                                                           
+                                                        </td>
+                                                        <td>{{timeSheetApproval.userLogin}}</td>
+                                                        <td *ngIf="timeSheetApproval.approvalFlag==1">Approved</td>
+                                                        <td *ngIf="timeSheetApproval.approvalFlag==0">Not Approved</td>
+                                                        <td *ngIf="timeSheetApproval.approvalFlag==2">Approved and Filled</td>
+                                                        <td>
+                                                                <button class="btn btn-sm btn-primary" (click)="openTimeSheet(timeSheetApproval.id)" [disabled]="timeSheetApproval.approvalFlag!=1? true:false">Fill Timesheet</button>
+                                                                <button class="btn btn-sm btn-primary" [routerLink]="['/timesheet/approval/details',timeSheetApproval.id]">view</button>
+                                                        </td>
+                                                    </tr>    
+                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                                <div class="tab-pane" id="2a">
+                                        <div class="table-responsive">
+                                                <table id="Datatable" class="display nowrap table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                                <th>Applied Date</th>
+                                                                <th>Start and End Date</th>
+                                                                <th>Manager Name</th>
+                                                                <th>Description</th>
+                                                                <th>UserName</th>
+                                                                <th>Approval</th>
+                                                                <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                        
+                                        
+                                                    <tbody>
+                                                        <tr *ngFor="let timeSheetApproval of timeSheetApprovalsRequest">
+                                                            <!-- <td>1</td> -->
+                                                            <td>{{timeSheetApproval.currentDate }}</td>
+                                                            <td>{{timeSheetApproval.fromDate | date:'MMM, dd'}}-to-{{timeSheetApproval.toDate | date:'MMM, dd yyyy'}}</td>
+                                                            <td>{{timeSheetApproval.managerName}}</td>  
+                                                            <td data-toggle="tooltip"
+                                                                title='{{timeSheetApproval.description}}'>
+                                                                {{timeSheetApproval.description}}
+                                                               
+                                                            </td>
+                                                            <td>{{timeSheetApproval.userLogin}}</td>  
+                                                            <td *ngIf="timeSheetApproval.approvalFlag!=2"><label class="my-0"><small><select class="input-group-sm status" name="Status"
+                                                                [(ngModel)]='timeSheetApproval.approvalFlag'>
+                                                                <option value='1'>Approved</option>
+                                                                <option value='0'>Not Approved</option>
+                                                            </select>
+                                                        </small></label></td>
+                                                        <td *ngIf="timeSheetApproval.approvalFlag==2">Approved and Filled</td>  
+                                                        <td>
+                                                                <button class="btn btn-sm btn-primary" (click)="save(timeSheetApproval)" [disabled]="timeSheetApproval.approvalFlag==2? true:false">save</button>
+                                                                <button class="btn btn-sm btn-primary" [routerLink]="['/timesheet/approval/details',timeSheetApproval.id]">view</button>
+                                                        </td>
+                                                        </tr>    
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                </div>
+                            </div>
+                  </div>
+        </div>
+        </div>
+    </div>
+    

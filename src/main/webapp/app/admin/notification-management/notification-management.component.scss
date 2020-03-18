@@ -1,0 +1,28 @@
+.form-control.is-invalid {
+  background-image: none !important;
+}
+
+textarea {
+  resize: none;
+}
+
+textarea.form-control {
+  width: 700px !important;
+}
+
+.card-body {
+  margin: 0px auto;
+}
+
+.table td {
+  font-size: 15px !important;
+}
+
+.table thead th {
+  font-size: 15px !important;
+  font-weight: bold !important;
+}
+
+::placeholder {
+  font-size: 17px !important;
+}

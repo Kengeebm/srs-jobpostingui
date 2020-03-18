@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="jobHistory">
+            <h2><span>Job History</span> {{jobHistory.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Job Id</span></dt>
+                <dd>
+                    <span>{{jobHistory.jobId}}</span>
+                </dd>
+                <dt><span>Client Name</span></dt>
+                <dd>
+                    <span>{{jobHistory.clientName}}</span>
+                </dd>
+                <dt><span>No Of Position</span></dt>
+                <dd>
+                    <span>{{jobHistory.noOfPosition}}</span>
+                </dd>
+                <dt><span>Position Name</span></dt>
+                <dd>
+                    <span>{{jobHistory.positionName}}</span>
+                </dd>
+                <dt><span>Location</span></dt>
+                <dd>
+                    <span>{{jobHistory.location}}</span>
+                </dd>
+                <dt><span>Job Desc</span></dt>
+                <dd>
+                    <span>{{jobHistory.jobDesc}}</span>
+                </dd>
+                <dt><span>Exp Req</span></dt>
+                <dd>
+                    <span>{{jobHistory.expReq}}</span>
+                </dd>
+                <dt><span>Filled Position</span></dt>
+                <dd>
+                    <span>{{jobHistory.filledPosition}}</span>
+                </dd>
+                <dt><span>Comments</span></dt>
+                <dd>
+                    <span>{{jobHistory.comments}}</span>
+                </dd>
+                <dt><span>Start Date</span></dt>
+                <dd>
+                    <span>{{jobHistory.startDate}}</span>
+                </dd>
+                <dt><span>End Date</span></dt>
+                <dd>
+                    <span>{{jobHistory.endDate}}</span>
+                </dd>
+                <dt><span>Closed On</span></dt>
+                <dd>
+                    <span>{{jobHistory.closedOn}}</span>
+                </dd>
+                <dt><span>Opened By</span></dt>
+                <dd>
+                    <span>{{jobHistory.openedBy}}</span>
+                </dd>
+                <dt><span>Closed By</span></dt>
+                <dd>
+                    <span>{{jobHistory.closedBy}}</span>
+                </dd>
+                <dt><span>Updated By</span></dt>
+                <dd>
+                    <span>{{jobHistory.updatedBy}}</span>
+                </dd>
+                <dt><span>Updated Date</span></dt>
+                <dd>
+                    <span>{{jobHistory.updatedDate}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/job-history', jobHistory.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

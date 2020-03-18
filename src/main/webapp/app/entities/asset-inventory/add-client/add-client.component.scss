@@ -1,0 +1,116 @@
+#clientSearch {
+  border: 2px solid rgb(180, 179, 179) !important;
+}
+#locationSearch {
+  border: 2px solid rgb(180, 179, 179) !important;
+}
+#assetSearch {
+  border: 2px solid rgb(180, 179, 179) !important;
+}
+#manufacturerSearch {
+  border: 2px solid rgb(180, 179, 179) !important;
+}
+
+.search {
+  max-width: 500px;
+  padding-bottom: 20px;
+  margin: auto;
+  float: left;
+}
+
+// .form-control-client {
+//   border: 2px solid #3e8acc !important;
+// }
+
+.form-control-client::placeholder {
+  font-family: FontAwesome;
+}
+
+p {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
+.ng-invalid:not(form) {
+  border-left: 1px solid #ced4da;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545 !important;
+}
+.star {
+  color: red;
+}
+
+.form-control.is-invalid {
+  background-image: none !important;
+}
+h2 {
+  font-weight: bold;
+  font-family: serif;
+}
+
+.search {
+  max-width: 500px;
+  padding: 10px;
+  margin: auto;
+  float: left;
+}
+
+.form-control::placeholder {
+  font-family: FontAwesome;
+}
+
+p {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.table {
+  background-color: white !important;
+  width: 100%;
+}
+
+.input-class .mat-form-field {
+  width: 20% !important;
+  text-align: center !important;
+}
+
+.table thead th {
+  font-size: 17px !important;
+  // text-transform: capitalize;
+  font-family: serif;
+  // color: indigo;
+}
+
+h2 {
+  margin-top: 10px;
+  font-weight: bold;
+}
+.project-title {
+  background-color: whitesmoke;
+}
+.project-tab .nav-link:hover {
+  color: white !important;
+  background-color: #00254a !important;
+}
+.project-tab #tabs .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  background-color: #00254a !important;
+  color: white !important;
+}
+.nav-fill .nav-item {
+  color: #00254a !important;
+  // font-size: 30px !important;
+  // font-family: serif;
+}
+h2 {
+  font-weight: bold;
+  font-family: serif;
+}
+.subBtn {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+}

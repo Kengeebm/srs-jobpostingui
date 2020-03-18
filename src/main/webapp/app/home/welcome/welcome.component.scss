@@ -1,0 +1,141 @@
+body {
+  background: #00bcd4;
+}
+
+h1 {
+  color: #fff;
+  margin: 40px 0 60px 0;
+  font-weight: 300;
+}
+
+.our-team-main {
+  width: 100%;
+  height: auto;
+  border-bottom: 5px #323233 solid;
+  background: #fff;
+  text-align: center;
+  border-radius: 10px;
+  position: relative;
+  transition: 0.5s;
+  margin-bottom: 10px;
+}
+
+.our-team-main img {
+  border-radius: 50%;
+  margin-bottom: 20px;
+  width: 90px;
+}
+
+.our-team-main h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.our-team-main p {
+  margin-bottom: 0;
+}
+
+.team-back {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px 15px 0 15px;
+  text-align: left;
+  background: #fff;
+}
+
+.team-front {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 10;
+  // background: #fff;
+  bottom: 0px;
+  //  transition: all 0.5s ease;
+}
+
+/*our-team-main*/
+
+.profile-team-main {
+  width: 100%;
+  height: auto;
+  border-bottom: 5px #323233 solid;
+  background: #fff;
+  text-align: center;
+  border-radius: 10px;
+  position: relative;
+  transition: 0.5s;
+  margin-bottom: 10px;
+}
+
+.welcomeGroup {
+  margin-top: -100px;
+}
+.bg-light {
+  background-color: white !important;
+  margin-bottom: 20px;
+}
+.profileBox {
+  display: flex;
+  justify-content: center;
+}
+.text-muted {
+  color: black !important;
+}
+.div-cursor {
+  cursor: pointer;
+}
+.div-cursor:hover {
+  color: #1e1f20 !important;
+}
+
+.card-stats .card-body {
+  padding: 1rem 1.5rem;
+}
+
+.card {
+  background: #ffffff !important;
+}
+
+a:not([href]):not([tabindex]) {
+  color: black;
+}
+
+.marquee {
+  color: black;
+  width: 100%;
+  bottom: 22px;
+  background-color: white;
+  font-size: large;
+  font-weight: bold;
+  position: fixed;
+}
+
+@media only screen and (max-width: 320px) {
+  .marquee {
+    width: auto;
+    position: relative;
+  }
+}
+
+.card-header {
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: darksalmon;
+  font-weight: bold;
+  align-content: center;
+}
+
+.card-text {
+  height: 300px !important;
+}
+
+.text-uppercase {
+  font-size: 15px !important;
+}
+
+label {
+  font-size: 15px !important;
+}

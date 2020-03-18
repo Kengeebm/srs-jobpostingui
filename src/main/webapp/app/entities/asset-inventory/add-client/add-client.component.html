@@ -1,0 +1,325 @@
+<div class="container-fluid mt--9 mb-5">
+    <div class="card">
+        <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+                <button class="btn btn-primary" [routerLink]="['/asset-dashboard']">Back</button>
+            </div>
+        </div>
+        <div class="card-header">
+        <div class="wrapper mt--18 card-body">
+            <nav class="project-title project-tab">
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                        aria-controls="nav-home" aria-selected="true">ADD CLIENT</a>
+                    &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                        aria-controls="nav-profile" aria-selected="false">ADD LOCATION</a>
+                    &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                    <a class="nav-item nav-link " id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                        aria-controls="nav-contact" aria-selected="false">ADD ASSETS</a>
+                    &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;
+                    <a class="nav-item nav-link " id="nav-slide-tab" data-toggle="tab" href="#nav-slide" role="tab"
+                        aria-controls="nav-slide" aria-selected="false">ADD MANUFACTURER</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+                                <form name="formClient" (ngSubmit)="f1.form.valid && onSubmit(f1)" #f1="ngForm">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="clientName">Client Name</label><span
+                                            class="star"> *</span>
+                                        <input type="text" class="form-control" name="clientName"
+                                            [(ngModel)]="addClient.clientName" #clientName="ngModel"
+                                            [ngClass]="{ 'is-invalid': f1.submitted && clientName.invalid }"
+                                            [value]="addClient.clientName" required />
+                                        <div *ngIf="f1.submitted && clientName.invalid" class="invalid-feedback">
+                                            <div *ngIf="clientName.errors.required">This field is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-secondary" (click)="reset(f1)">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="search">
+                            <input class="form-control" id="clientSearch" type="search" [(ngModel)]="searchText"
+                                placeholder="Search by Client Name" />
+                        </div>
+                        <div class="table-responsive text-center card">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th [mdbTableSort]="clientsList" sortBy="id"><span>Id</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th [mdbTableSort]="clientsList" sortBy="clientName"><span>Client
+                                                Name</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let client of clientsList | clientFilter:searchText:['clientName'] | paginate: config">
+                                        <td>{{client.id}}</td>
+                                        <td>{{client.clientName}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="submit" class="btn btn-primary btn-sm"
+                                                    (click)="editClient(client.id)">
+                                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Edit</span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)="deleteClient(client.id)">
+                                                    <fa-icon [icon]="'times'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-center" *ngIf="(clientsList | clientFilter: searchText).length == 0">No
+                                matching records
+                                found</p>
+                            <pagination-controls class="text-center" (pageChange)="pageChangeClient($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+                                <form name="form" (ngSubmit)="f.form.valid && onSubmitLocation(f)" #f="ngForm">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="locationName">Location Name</label><span
+                                            class="star"> *</span>
+                                        <input type="text" class="form-control" name="locationName"
+                                            [(ngModel)]="addLocation.locationName" #locationName="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && locationName.invalid }"
+                                            [value]="addLocation.locationName" required />
+                                        <div *ngIf="f.submitted && locationName.invalid" class="invalid-feedback">
+                                            <div *ngIf="locationName.errors.required">This field is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-secondary" (click)="resetLocation(f)">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="search">
+                            <input class="form-control" id="locationSearch" type="search" [(ngModel)]="searchText"
+                                placeholder="Search by Location Name" />
+                        </div>
+                        <div class="table-responsive text-center card">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th [mdbTableSort]="locationsList" sortBy="id"><span>Id</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th [mdbTableSort]="locationsList" sortBy="locationName"><span>Location
+                                                Name</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let location of locationsList | locationFilter:searchText:['locationName'] | paginate: config1">
+                                        <td>{{location.id}}</td>
+                                        <td>{{location.locationName}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="submit" class="btn btn-primary btn-sm"
+                                                    (click)="editLocation(location.id)">
+                                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Edit</span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)="deleteLocation(location.id)">
+                                                    <fa-icon [icon]="'times'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-center" *ngIf="(locationsList | locationFilter: searchText).length == 0">
+                                No
+                                matching records
+                                found</p>
+                            <pagination-controls class="text-center" (pageChange)="pageChangeLocation($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+                                <form name="formAssetList" (ngSubmit)="f2.form.valid && onSubmitAssetList(f2)"
+                                    #f2="ngForm">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="assetName">Asset Type</label><span
+                                            class="star"> *</span>
+                                        <input type="text" class="form-control" name="assetName"
+                                            [(ngModel)]="addAssetList.assetName" #assetName="ngModel"
+                                            [ngClass]="{ 'is-invalid': f2.submitted && assetName.invalid }"
+                                            [value]="addAssetList.assetName" required />
+                                        <div *ngIf="f2.submitted && assetName.invalid" class="invalid-feedback">
+                                            <div *ngIf="assetName.errors.required">This field is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-secondary" (click)="resetAssetList(f2)">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="search">
+                            <input class="form-control" id="assetSearch" type="search" [(ngModel)]="searchText"
+                                placeholder="Search by Asset Type" />
+                        </div>
+                        <div class="table-responsive text-center card">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th [mdbTableSort]="assetsList" sortBy="id"><span>Id</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th [mdbTableSort]="assetsList" sortBy="assetName"><span>Asset Name</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let asset of assetsList | assetListFilter:searchText:['assetName'] | paginate: config2">
+                                        <td>{{asset.id}}</td>
+                                        <td>{{asset.assetName}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="submit" class="btn btn-primary btn-sm"
+                                                    (click)="editAsset(asset.id)">
+                                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Edit</span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)="deleteAsset(asset.id)">
+                                                    <fa-icon [icon]="'times'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-center" *ngIf="(assetsList | assetListFilter: searchText).length == 0">No
+                                matching records
+                                found</p>
+                            <pagination-controls class="text-center" (pageChange)="pageChangeAsset($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-slide" role="tabpanel" aria-labelledby="nav-slide-tab">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+                                <form name="formManufacturer" (ngSubmit)="f3.form.valid && onSubmitManufacturer(f3)"
+                                    #f3="ngForm">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="manufacturerName">Manufacturer
+                                            Name</label><span class="star"> *</span>
+                                        <input type="text" class="form-control" name="manufacturerName"
+                                            [(ngModel)]="addManufacturer.manufacturerName" #manufacturerName="ngModel"
+                                            [ngClass]="{ 'is-invalid': f3.submitted && manufacturerName.invalid }"
+                                            [value]="addManufacturer.manufacturerName" required />
+                                        <div *ngIf="f3.submitted && manufacturerName.invalid" class="invalid-feedback">
+                                            <div *ngIf="manufacturerName.errors.required">This field is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-secondary" (click)="resetManufacturer(f3)">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="search">
+                            <input class="form-control" id="manufacturerSearch" type="search" [(ngModel)]="searchText"
+                                placeholder="Search by Manufacturer Name" />
+                        </div>
+                        <div class="table-responsive text-center card">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th [mdbTableSort]="manufacturerList" sortBy="id"><span>Id</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th [mdbTableSort]="manufacturerList" sortBy="manufacturerName">
+                                            <span>Manufacturer Name</span>
+                                            <fa-icon [icon]="'sort'"></fa-icon>
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let manufacturer of manufacturerList | manufacturerListFilter:searchText:['manufacturerName'] | paginate: config3">
+                                        <td>{{manufacturer.id}}</td>
+                                        <td>{{manufacturer.manufacturerName}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="submit" class="btn btn-primary btn-sm"
+                                                    (click)="editManufacturer(manufacturer.id)">
+                                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Edit</span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)="deleteManufacturer(manufacturer.id)">
+                                                    <fa-icon [icon]="'times'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-center"
+                                *ngIf="(manufacturerList | manufacturerListFilter: searchText).length == 0">No
+                                matching records
+                                found</p>
+                            <pagination-controls class="text-center" (pageChange)="pageChangeManufacturer($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

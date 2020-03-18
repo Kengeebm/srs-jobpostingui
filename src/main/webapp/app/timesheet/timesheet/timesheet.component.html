@@ -1,0 +1,196 @@
+<div class="container-fluid mt--9 pb-4 pt-1">
+    <div class="container-fluid">
+        <div class="row upBtn mt--4 pl-3">
+            <button class="btn btn-primary backBtn topBtn" (click)="onBackButtonEvent(contentback)"
+                [disabled]='disableBack'>
+                Back
+            </button>
+            <!-- <button class="btn btn-primary topBtn" routerLink="/timesheet/history" routerLinkActive="active" >Timesheet History</button> -->
+            <button class="btn btn-primary topBtn" (click)="onUnfreeze()" [disabled]='unfreeze'>Unfreeze Timesheet
+            </button>
+            <!-- <button class="btn btn-md btn-primary tbtn topBtn" [disabled]="disableDownload" (click)="downloadExcel()">Download</button>
+         <button class="btn btn-md btn-primary topBtn" [disabled]="disableDownload" (click)="mailExcel()">Send Mail</button> -->
+            <!-- <button class="btn btn-primary topRytBtn" routerLink="/timesheetadmin" routerLinkActive="active">Timesheet
+                Admin
+            </button> -->
+            <button class="btn btn-primary topRytBtn" routerLink="/timesheethistory" routerLinkActive="active">Timesheet
+                History
+            </button>
+        </div>
+        <div class="header-body card">
+            <div class='card-header text-center'>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-9">
+                        <div class="d-flex justify-content-center titleHead">
+                            {{currentPayroll}}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-3 rytTopData">
+                        <div><label class="timesheet-header">Submitted On:&nbsp;<b>{{timesheets.submitDate}}</b></label>
+                        </div>
+                        <div><label class="timesheet-header">Status:&nbsp;<b>{{timesheets.approveStatus}}</b></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #contentback let-modal>
+                <div class=" modal-side modal-bottom-right modal-notify">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <h2>Are you sure you want to leave this page?</h2>
+                        </div>
+                        <div class="modal-footer flex-center">
+                            <button class="btn btn-md btn-primary alert" (click)="prevPage()">Leave this
+                                Page
+                            </button>
+                            <button class="btn btn-md btn-primary alert" (click)="modal.dismiss('Cross click')">Stay on
+                                this
+                                Page
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <div class="row">
+                <div class="col-sm-9 d-flex justify-content-center text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row cal">
+                                <div class="col-sm-1.0 border border-primary dates justify-content-center"
+                                    *ngFor="let timesheetdatestatus of timesheets.timeSheetDateStatusList; let i = index"
+                                    [ngClass]="[timesheetdatestatus.status == present? 'present' : timesheetdatestatus.status == wfh? 'wfh' : timesheetdatestatus.status == wcl? 'wcl': timesheetdatestatus.status == co? 'co': 'holiday']">
+                                    <div class="detail mb-1 text-center" style="color: black"
+                                        [ngClass]="[timesheetdatestatus.status == present? 'present' : timesheetdatestatus.status == wfh? 'wfh': timesheetdatestatus.status == wcl? 'wcl': timesheetdatestatus.status == co? 'co':'holiday']">
+                                        <span><small><strong>{{timesheetdatestatus.date | date:'EEE, MMM'}}</strong></small></span>
+                                        <span class="my-0">
+                                            <h1 class="my-0"><strong>{{timesheetdatestatus.date | date:'dd'}}</strong>
+                                            </h1>
+                                            <h5>{{timesheetdatestatus.date | date:'EEE' == 'Sun'}}</h5>
+                                        </span>
+                                        <label class="my-0">
+                                            <small>
+                                                <div
+                                                    *ngIf="((timesheetdatestatus.date | date: 'EEE') == ('Mon')) || ((timesheetdatestatus.date | date: 'EEE') == ('Tue')) || ((timesheetdatestatus.date | date: 'EEE') == ('Wed')) || ((timesheetdatestatus.date | date: 'EEE') == ('Thu')) || ((timesheetdatestatus.date | date: 'EEE') == ('Fri'))">
+                                                    <select class="input-group-sm status" name="Status"
+                                                        [(ngModel)]='timesheetdatestatus.status'
+                                                        [disabled]="isTimeSheetFilledDisable || timesheetdatestatus.leaveDay"
+                                                        (change)="changes()">
+                                                        <option *ngFor="let status of statusProperty"
+                                                            [value]='status.name'>
+                                                            {{status.name}}
+                                                        </option>
+                                                        <option [value]='wfh'>
+                                                            WFH
+                                                        </option>
+                                                        <option [value]='wcl'>
+                                                            WCL
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div
+                                                    *ngIf="((timesheetdatestatus.date | date: 'EEE') == ('Sat')) || ((timesheetdatestatus.date | date: 'EEE') == ('Sun'))">
+                                                    <select class="input-group-sm status" name="Status"
+                                                        [(ngModel)]='timesheetdatestatus.status'
+                                                        [disabled]="isTimeSheetFilledDisable" (change)="changes()">
+                                                        <option [value]='holiday'>
+                                                            Holiday
+                                                        </option>
+                                                        <option [value]='present'>
+                                                            Present
+                                                        </option>
+                                                        <option [value]='wfh'>
+                                                            WFH
+                                                        </option>
+                                                        <option [value]='wcl'>
+                                                            WCL
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="legend text-left">
+                                <p><b>Legend: </b></p>
+                                <p>Work-From-Home: WFH</p>
+                                <p>Work-From-Client-Location: WCL</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 coming-holiday">
+                    <div class="card">
+                        <div class="card-header pb-1 pt-1 text-center">
+                            <h3 class="holiday-list"><strong>Holidays List</strong></h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="th-sm">Holiday</th>
+                                        <th class="th-sm">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let publicHoliday of publicHolidays; let i = index">
+                                        <td>{{publicHoliday.name}}</td>
+                                        <td>{{publicHoliday.date | date: "dd/MM/yyyy"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row btmbtn">
+                <button class="btn btn-md btn-primary tbtn footerBtn" (click)="onSave(false)"
+                    [disabled]='isSaveDisable'>Save
+                </button>
+                <button class="btn btn-md btn-primary tbtn footerBtn" (click)="submitTimesheet(content)"
+                    [disabled]='isSaveSubmitDisable'>
+                    Save & Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal class="modal-content2">
+    <div class=" modal-side modal-bottom-right modal-notify">
+        <div>
+            <div class="modal-header">
+                <h2>Do you want to save and submit changes?</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+            <div class=" text-center">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Working Days : <span>{{presentCount}}</span></p>
+                        <p>Weekends / Holidays : <span>{{officialHoliday}}</span></p>
+                        <p>Leaves : <span>{{leavesCount}}</span></p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Work From Home: <span>{{workFromHomeCount}}</span></p>
+                        <p>Work From Client Location: <span>{{workFromClientLocationCount}}</span></p>
+                        <p>Comp Off: <span>{{compOffCount}}</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-btn flex-center">
+                <button class="btn btn-primary" (click)="mailSend(true)">Yes</button>
+                <button class="btn btn-primary" (click)="NoOption(modal)">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+</div>

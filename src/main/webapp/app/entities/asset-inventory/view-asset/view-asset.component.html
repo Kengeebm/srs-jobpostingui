@@ -1,0 +1,261 @@
+<!-- <section id="tabs" class="project-tab"> -->
+<div class="container-fluid mt--9 mb-5">
+  <div class="row align-items-center">
+    <button class="btn btn-primary" [routerLink]="['/asset-dashboard']">Back</button>
+  </div>
+  <div class="card">
+
+    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+      <mat-tab label="List Of All Assets">
+        <div class="container-fluid">
+          <div class="card">
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+            <table mat-table [dataSource]="allAddAssetListDataSource" class="mat-elevation-z8" #sort1="matSort" matSort>
+              <!-- assetType Column -->
+              <ng-container matColumnDef="assetType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Asset Type</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.assetType}} </td>
+              </ng-container>
+
+              <!-- serialNumber Column -->
+              <ng-container matColumnDef="serialNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Serial Number</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.serialNumber}} </td>
+              </ng-container>
+
+              <!-- modelNumber Column -->
+              <ng-container matColumnDef="modelNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Model Number</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.modelNumber}} </td>
+              </ng-container>
+
+              <!-- manufacturer Column -->
+              <ng-container matColumnDef="manufacturer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Manufacturer</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.manufacturer}} </td>
+              </ng-container>
+
+              <!-- procurementDate Column -->
+              <ng-container matColumnDef="procurementDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Procurement Date</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.procurementDate}} </td>
+              </ng-container>
+
+              <!-- clientName Column -->
+              <ng-container matColumnDef="clientName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Asset Owned By</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+              </ng-container>
+
+              <!-- locationName Column -->
+              <ng-container matColumnDef="locationName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Location</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.locationName}} </td>
+              </ng-container>
+
+              <!--Action Column-->
+              <ng-container matColumnDef="save">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Action</b></th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-raised-button class="btn btn-primary btn-sm" type="submit" queryParamsHandling="merge"
+                    (click)="editAddAsset(element.id)">
+                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                    <span class="d-none d-md-inline">Edit</span>
+                  </button>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection.toggle(row)">
+              </tr>
+            </table>
+            <div *ngIf="noData" class="no-records">
+              No records found for selected data
+            </div>
+            <mat-paginator [pageSizeOptions]="[50,100,1000,totalNoRows]" showFirstLastButtons #paginator1>
+            </mat-paginator>
+            <div class="card">
+              <div class="row subBtn">
+                <div>
+                  <button class="btn btn-primary mb-4 mt-2" [disabled]='noData' mat-raised-button
+                    (click)="allAssetsListExcel()">Download
+                    All
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Unassigned Assets">
+        <div class="container-fluid">
+          <div class="card">
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter1($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+            <table mat-table [dataSource]="unassignedListDataSource" class="mat-elevation-z8" #sort2="matSort" matSort>
+              <!-- assetType Column -->
+              <ng-container matColumnDef="assetType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Asset Type</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.assetType}} </td>
+              </ng-container>
+
+              <!-- serialNumber Column -->
+              <ng-container matColumnDef="serialNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Serial Number</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.serialNumber}} </td>
+              </ng-container>
+
+              <!-- modelNumber Column -->
+              <ng-container matColumnDef="modelNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Model Number</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.modelNumber}} </td>
+              </ng-container>
+
+              <!-- manufacturer Column -->
+              <ng-container matColumnDef="manufacturer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Manufacturer</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.manufacturer}} </td>
+              </ng-container>
+
+              <!-- procurementDate Column -->
+              <ng-container matColumnDef="procurementDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Procurement Date</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.procurementDate}} </td>
+              </ng-container>
+
+              <!-- clientName Column -->
+              <ng-container matColumnDef="clientName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Asset Owned By</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+              </ng-container>
+
+              <!-- locationName Column -->
+              <ng-container matColumnDef="locationName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Location</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.locationName}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns2;">
+              </tr>
+            </table>
+            <div *ngIf="noData" class="no-records">
+              No records found for selected data
+            </div>
+            <mat-paginator [pageSizeOptions]="[50,100,1000,totalNoRows]" showFirstLastButtons #paginator2>
+            </mat-paginator>
+            <div class="card">
+              <div class="row subBtn">
+                <div>
+                  <button class="btn btn-primary mb-4 mt-2" [disabled]='noData' mat-raised-button
+                    (click)="generateExcel()">Download All
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Reports Of All Assets Assigned & Released">
+        <div class="container-fluid">
+          <div class="card">
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter2($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+            <table mat-table [dataSource]="listAllAssetReportsDataSource" class="mat-elevation-z8" #sort3="matSort"
+              matSort>
+              <!-- assetType Column -->
+              <ng-container matColumnDef="assetType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Asset Type</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.assetType}} </td>
+              </ng-container>
+
+              <!-- serialNumber Column -->
+              <ng-container matColumnDef="serialNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Serial Number</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.serialNumber}} </td>
+              </ng-container>
+
+              <!-- modelNumber Column -->
+              <ng-container matColumnDef="modelNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Model Number</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.modelNumber}} </td>
+              </ng-container>
+
+              <!-- manufacturer Column -->
+              <ng-container matColumnDef="manufacturer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Manufacturer</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.manufacturer}} </td>
+              </ng-container>
+
+              <!-- procurementDate Column -->
+              <ng-container matColumnDef="procurementDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Procurement Date</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.procurementDate}} </td>
+              </ng-container>
+
+              <!-- status Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Status</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+              </ng-container>
+
+              <!-- assignedTo Column -->
+              <ng-container matColumnDef="assignTo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Assigned To</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.assignTo}} </td>
+              </ng-container>
+
+              <!-- assignmentDate Column -->
+              <ng-container matColumnDef="assignmentDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Assignment Date</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.assignmentDate}} </td>
+              </ng-container>
+
+              <!-- releaseDate Column -->
+              <ng-container matColumnDef="releaseDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Released Date</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.releaseDate}} </td>
+              </ng-container>
+
+              <!--clientName Column-->
+              <ng-container matColumnDef="clientName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Asset Owned By</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+              </ng-container>
+
+              <!-- location Column -->
+              <ng-container matColumnDef="locationName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Location</b></th>
+                <td mat-cell *matCellDef="let element"> {{element.locationName}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns3;">
+              </tr>
+            </table>
+            <div *ngIf="noData" class="no-records">
+              No records found for selected data
+            </div>
+            <mat-paginator [pageSizeOptions]="[50,100,1000,totalNoRows]" showFirstLastButtons #paginator3>
+            </mat-paginator>
+            <div class="card">
+              <div class="row subBtn">
+                <div>
+                  <button class="btn btn-primary mb-4 mt-2" [disabled]='noData' mat-raised-button
+                    (click)="listAllAssetExcel()">Download
+                    All
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

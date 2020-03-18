@@ -1,0 +1,59 @@
+<div class="container-fluid mt--9 mb-5">
+    <div class="card">
+        <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+                <button class="btn btn-primary" [routerLink]="['/welcome']">Back</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <label class="form-label-control">
+                <h1>Add Notification:</h1>
+            </label>
+            <form name="notificationForm" role="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm">
+                <div class="row">
+                    <div class="form-group">
+                        <textarea class="form-control" rows="7" [(ngModel)]="notification.message" #message="ngModel"
+                            name="message" [ngClass]="{ 'is-invalid': f.submitted && message.invalid }" required
+                            placeholder="Enter the message here..."></textarea>
+                        <div *ngIf="f.submitted && message.invalid" class="invalid-feedback">
+                            <div *ngIf="message.errors.required">This field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <p>(Last 5 records will be displayed in notification bar)</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-12 card spacing">
+        <div class="table-responsive text-center">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><span>MESSAGE</span></th>
+                        <th><span>DATE</span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let notify of notificationList">
+                        <td>
+                            <p>{{notify.message}}</p>
+                        </td>
+                        <td>{{notify.publishedDate}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteItem(notify.id)">
+                                    <fa-icon [icon]="'times'"></fa-icon>
+                                    <span class="d-none d-md-inline">Delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

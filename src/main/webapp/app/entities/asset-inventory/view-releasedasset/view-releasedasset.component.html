@@ -1,0 +1,54 @@
+<div class="container-fluid mt--9 mb-5">
+    <div class="row align-items-center">
+        <button class="btn btn-primary" [routerLink]="['/asset-reports']">Back</button>
+    </div>
+    <h2 class="text-center">REPORT OF RELEASED ASSETS</h2>
+    <div class="search">
+        <input class="form-control" type="search" [(ngModel)]="searchText" placeholder="Search by Serial.No/Name" />
+    </div>
+    <div class="table-responsive text-center">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th [mdbTableSort]="releasedAssetList" sortBy="assetType"><span>Asset Type</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                      </th>
+                      <th [mdbTableSort]="releasedAssetList" sortBy="serialNumber"><span>Serial Number</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                      </th>
+                      <th [mdbTableSort]="releasedAssetList" sortBy="assignTo"><span>Assign To</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                      </th>
+                      <th [mdbTableSort]="releasedAssetList" sortBy="assignmentDate"><span>Assignment Date</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                      </th>
+                      <th [mdbTableSort]="releasedAssetList" sortBy="status"><span>Status</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                      </th>
+                      <th [mdbTableSort]="releasedAssetList" sortBy="reason"><span>Reason</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                      </th>
+                      <th [mdbTableSort]="releasedAssetList" sortBy="releasedDate"><span>Released Date</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                      </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container
+                    *ngFor="let assign of releasedAssetList | nameFilter:searchText:['assignTo', 'serialNumber'] | paginate: config">
+                    <tr>
+                        <td>{{assign.assetType}}</td>
+                        <td>{{assign.serialNumber}}</td>
+                        <td>{{assign.assignTo}}</td>
+                        <td>{{assign.assignmentDate | date: "dd-MM-yyyy"}}</td>
+                        <td>{{assign.status}}</td>
+                        <td>{{assign.reason}}</td>
+                        <td>{{assign.releasedDate | date: "dd-MM-yyyy"}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <p class="text-center" *ngIf="(releasedAssetList | nameFilter: searchText).length == 0">No matching records found</p>
+        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+</div>

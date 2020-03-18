@@ -1,0 +1,114 @@
+.eipform {
+  align-items: center;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+.img1 {
+  height: 80px;
+  width: 80px;
+}
+.img2 {
+  height: 121px;
+  width: 160px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.isDisabled {
+  pointer-events: none;
+  cursor: default;
+  color: gray;
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+  color: #fff;
+  border-color: #00254a;
+  background-color: #00254a;
+}
+
+btn-group .btn,
+.input-group .btn {
+  margin-right: 0;
+  padding-block-end: 9px;
+  padding-block-start: 0px;
+  transform: translateY(0);
+}
+
+.input-group-append {
+  margin-left: -1px;
+  margin-top: -3px;
+}
+.star {
+  color: red;
+}
+
+.ng-invalid:not(form) {
+  border-left: white !important;
+}
+
+.modal-body {
+  height: 104px !important;
+}
+
+.text-center {
+  font-weight: bold;
+}
+
+.heading-small {
+  font-size: 149% !important;
+  text-transform: uppercase;
+  padding-left: 180px;
+  font-weight: bold;
+}
+
+.text-muted {
+  color: black !important;
+}

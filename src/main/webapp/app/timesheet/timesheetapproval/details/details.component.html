@@ -1,0 +1,56 @@
+<div class="card mt--9 pb-8 pt-5 bg-white shadow p-4 mb-4">
+    <div class="card-header text-center">
+        <b> TIMESHEET APPROVAL REQUEST DETAILS</b>
+    </div>
+    <div class="card-body">  
+    <div class="row form-group">
+        <div class="col-sm-6">
+             <label><b>Applied Date</b></label>
+            <input type="text" class="form-control" name="appliedDate" [(ngModel)]="timeSheetApproval.currentDate">
+        </div>
+        <div class="col-sm-6 " >
+            <label><b>Applied By</b></label>
+            <input type="text" class="form-control" name="userLogin" [(ngModel)]="timeSheetApproval.userLogin" >
+        </div>
+        
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-6 date" >
+            <label><b>Start Date</b></label>
+            <input type="text" class="form-control" name="toDate" [(ngModel)]="timeSheetApproval.fromDate" >
+        </div>
+        <div class="col-sm-6 date">
+            <label><b>End Date</b></label>
+            <input type="text" class="form-control" name="fromdate" [(ngModel)]="timeSheetApproval.toDate" >
+        </div>      
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-6">
+            <label><b>Manager Name</b></label>
+            <input type="email" class="form-control" name="managerName" [(ngModel)]="timeSheetApproval.managerName" >
+        </div>
+        <div class="col-sm-6">
+          <label>Manager Email</label>
+          <input type="text" class="form-control" name="manageremail" [(ngModel)]="timeSheetApproval.managerEmail">
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-sm-6">
+            <label><b>Description</b></label>
+            <textarea class="form-control" name="description" [(ngModel)]="timeSheetApproval.description"></textarea>
+        </div>
+      <div class="col-sm-6">
+        <label><b>Action</b></label>
+        <select class="form-control" id="sel1" [(ngModel)]="timeSheetApproval.approvalFlag">
+            <option value="true">Approved</option>
+            <option value="false">Not-Approved</option>
+          </select>
+      </div>
+    </div> 
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-primary float-right" type="button" (click)="update()"> Save</button>
+        </div>
+    </div>
+</div>
+</div>

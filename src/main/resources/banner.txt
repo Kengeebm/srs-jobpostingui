@@ -1,0 +1,23 @@
+${AnsiColor.GREEN}  sSSs   .S   .S_sSSs    ${AnsiColor.RED}    .S    sSSs_sSSs     .S_SSSs   ${AnsiColor.BLUE} .S       S.    .S   
+${AnsiColor.GREEN} d%%SP  .SS  .SS~YS%%b   ${AnsiColor.RED}   .SS   d%%SP~YS%%b   .SS~SSSSS  ${AnsiColor.BLUE}.SS       SS.  .SS  
+${AnsiColor.GREEN}d%S'    S%S  S%S   `S%b  ${AnsiColor.RED}   S%S  d%S'     `S%b  S%S   SSSS ${AnsiColor.BLUE}S%S       S%S  S%S  
+${AnsiColor.GREEN}S%S     S%S  S%S    S%S  ${AnsiColor.RED}   S%S  S%S       S%S  S%S    S%S ${AnsiColor.BLUE}S%S       S%S  S%S  
+${AnsiColor.GREEN}S&S     S&S  S%S    d*S  ${AnsiColor.RED}   S&S  S&S       S&S  S%S SSSS%P ${AnsiColor.BLUE}S&S       S&S  S&S  
+${AnsiColor.GREEN}S&S_Ss  S&S  S&S   .S*S  ${AnsiColor.RED}   S&S  S&S       S&S  S&S  SSSY  ${AnsiColor.BLUE}S&S       S&S  S&S  
+${AnsiColor.GREEN}S&S~SP  S&S  S&S_sdSSS   ${AnsiColor.RED}   S&S  S&S       S&S  S&S    S&S ${AnsiColor.BLUE}S&S       S&S  S&S  
+${AnsiColor.GREEN}S&S     S&S  S&S~YSSY    ${AnsiColor.RED}   S&S  S&S       S&S  S&S    S&S ${AnsiColor.BLUE}S&S       S&S  S&S  
+${AnsiColor.GREEN}S*b     S*S  S*S         ${AnsiColor.RED}   d*S  S*b       d*S  S*S    S&S ${AnsiColor.BLUE}S*b       d*S  S*S  
+${AnsiColor.GREEN}S*S.    S*S  S*S         ${AnsiColor.RED}  .S*S  S*S.     .S*S  S*S    S*S ${AnsiColor.BLUE}S*S.     .S*S  S*S  
+${AnsiColor.GREEN} SSSbs  S*S  S*S         ${AnsiColor.RED}sdSSS    SSSbs_sdSSS   S*S SSSSP  ${AnsiColor.BLUE} SSSbs_sdSSS   S*S  
+${AnsiColor.GREEN}  YSSP  S*S  S*S         ${AnsiColor.RED}YSSY      YSSP~YSSY    S*S  SSY   ${AnsiColor.BLUE}  YSSP~YSSY    S*S  
+${AnsiColor.GREEN}        SP   SP          ${AnsiColor.RED}                       SP         ${AnsiColor.BLUE}               SP   
+${AnsiColor.GREEN}        Y    Y           ${AnsiColor.RED}                       Y          ${AnsiColor.BLUE}               Y    
+${AnsiColor.BRIGHT_BLUE}:: Running Spring Boot ${spring-boot.version} ::
+
+U _____ u                 ____                 _         U  ___ u    ____              _   _                
+\| ___"|/      ___      U|  _"\ u           U |"| u       \/"_ \/ U | __")u         U |"|u| |      ___      
+ |  _|"       |_"_|     \| |_) |/  U  u    _ \| |/        | | | |  \|  _ \/  U  u    \| |\| |     |_"_|     
+ | |___        | |       |  __/    /___\  | |_| |_,-. .-,_| |_| |   | |_) |  /___\    | |_| |      | |      
+ |_____|     U/| |\u     |_|      |__"__|  \___/-(_/   \_)-\___/    |____/  |__"__|  <<\___/     U/| |\u    
+ <<   >>  .-,_|___|_,-.  ||>>_              _//             \\     _|| \\_          (__) )(   .-,_|___|_,-. 
+(__) (__)  \_)-' '-(_/  (__)__)            (__)            (__)   (__) (__)             (__)   \_)-' '-(_/  

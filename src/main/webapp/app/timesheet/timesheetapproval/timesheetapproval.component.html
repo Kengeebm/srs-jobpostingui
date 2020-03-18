@@ -1,0 +1,57 @@
+
+<div class="card mt--9 pb-8 pt-5 bg-white shadow p-4 mb-4">
+    <div class="card-header">
+            <div class="row">
+                <div class="col-lg-1">
+                    <div class="bck-btn text-center">
+                        <button class="btn btn-md btn-primary" [routerLink]="['/timesheet']" id="back 
+Button">Back</button>
+                    </div>
+                </div>
+                <div class="col-lg-11">
+<div class="card-header text-center">
+    <b> REQUEST TO UNFREEZE TIMESHEET</b>
+</div>
+<div class="card-body">  
+<div class="row form-group">
+    <div class="col-sm-6">
+         <label><b>From Date</b></label>
+        <input type="date" class="form-control" name="fromDate" required [(ngModel)]='timeSheetApproval.fromDate' >
+    </div>
+    <div class="col-sm-6" >
+        <label><b>End Date</b></label>
+        <input type="date" class="form-control" name="toDate" required [(ngModel)]='timeSheetApproval.toDate'>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-sm-6">
+        <label><b>Manager Name</b></label>
+        <input type="text" class="form-control" name="managerName" required 
+
+[(ngModel)]='timeSheetApproval.managerName'>
+    </div>
+    <div class="col-sm-6">
+        <label><b>Manager Email</b></label>
+        <input type="email" class="form-control" name="managerEmail" required 
+
+[(ngModel)]='timeSheetApproval.managerEmail'>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-sm-12">
+        <label><b>Description</b></label>
+        <textarea class="form-control" name="description" required 
+
+[(ngModel)]='timeSheetApproval.description'></textarea>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-primary" type="button" (click)="save()"> Raise Request</button>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
