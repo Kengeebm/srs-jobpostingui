@@ -40,7 +40,7 @@
     "highcharts": "^7.2.0",
     "install": "^0.13.0",
     "json-server": "^0.15.1",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "ng-jhipster": "0.10.1",
     "ng-recaptcha": "^5.0.0",
     "ngx-cookie": "4.0.2",
